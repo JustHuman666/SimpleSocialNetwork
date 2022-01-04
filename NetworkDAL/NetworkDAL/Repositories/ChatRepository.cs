@@ -66,16 +66,34 @@ namespace NetworkDAL.Repositories
                 .Include(chat => chat.Users).FirstOrDefaultAsync(chat => chat.Id == id);
         }
 
-        public async Task<IQueryable<Chat>> GetUserChatsById(int id)
+        public async Task<IQueryable<Chat>> GetChatsByUserId(int id)
         {
-            var user = await _context.UserProfiles.FirstOrDefaultAsync(user => user.Id == id);
-            var chats = await _context.Chats.ToListAsync();
-            IQueryable<Chat> userChats = Enumerable.Empty<Chat>().AsQueryable();
-            if (user != null) 
+            var user = await _context.UserProfiles.FindAsync(id);
+            var chats = Enumerable.Empty<Chat>().AsQueryable();
+            if(user != null && user.Chats.Count != 0)
             {
-                userChats = chats.Where(chat => chat.Users.Contains(user)).AsQueryable();
+                foreach (var userChat in user.Chats)
+                {
+                    var chat = await _context.Chats.FirstOrDefaultAsync(chat => chat.Id == userChat.ChatId);
+                    chats.Append(chat);
+                }
             }
-            return userChats;
+            return chats;
+        }
+
+        public async Task<IQueryable<UserProfile>> GetUsersOfChatAsync(int id)
+        {
+            var chat = await _context.Chats.FindAsync(id);
+            var users = Enumerable.Empty<UserProfile>().AsQueryable();
+            if (chat != null && chat.Users.Count != 0)
+            {
+                foreach (var userChat in chat.Users)
+                {
+                    var user = await _context.UserProfiles.FirstOrDefaultAsync(us => us.Id == userChat.UserId);
+                    users.Append(user);
+                }
+            }
+            return users;
         }
 
         public void UpdateAsync(Chat item)

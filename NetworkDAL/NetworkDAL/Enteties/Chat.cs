@@ -15,9 +15,14 @@ namespace NetworkDAL.Enteties
         public DateTime CreationDate { get; set; }
 
         /// <summary>
+        /// Name of the chat
+        /// </summary>
+        public string ChatName { get; set; }
+
+        /// <summary>
         /// Collection of all users who are in this chat
         /// </summary>
-        public virtual ICollection<UserProfile> Users {get; set;}
+        public virtual ICollection<UserChat> Users {get; set;}
 
         /// <summary>
         /// Collection of all messages - history of the chat

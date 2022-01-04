@@ -27,21 +27,21 @@ namespace NetworkDAL.Enteties
         /// <summary>
         /// Instance of user who send this message
         /// </summary>
-        public UserProfile Sender { get; set; }
+        public virtual UserProfile Sender { get; set; }
         [ForeignKey("Sender")]
         public int SenderId { get; set; }
 
         /// <summary>
         /// Instance of chat where this message was sent
         /// </summary>
-        public Chat UsersChat { get; set; }
+        public virtual Chat UsersChat { get; set; }
         [ForeignKey("Chat")]
         public int ChatId { get; set; }
 
         /// <summary>
         /// Instance of message status for users
         /// </summary>
-        public MessageStatus Status { get; set; }
+        public virtual MessageStatus Status { get; set; }
         [ForeignKey("Status")]
         public int statusId { get; set; }
 

@@ -2,6 +2,7 @@
 using NetworkDAL.Interfaces.BaseInterfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,5 +19,12 @@ namespace NetworkDAL.Interfaces
         /// <param name="id">Id of profile that is found</param>
         /// <returns>An instance of found user profile</returns>
         Task<UserProfile> GetByIdAsync(int id);
+
+        /// <summary>
+        /// To get all frieds of chosen user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<IQueryable<UserProfile>> GetUserFriendsByIdAsync(int id);
     }
 }

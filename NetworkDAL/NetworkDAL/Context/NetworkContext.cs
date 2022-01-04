@@ -31,13 +31,15 @@ namespace NetworkDAL.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("DefaultConnection");
+            optionsBuilder.UseSqlServer(@"Server = localhost, 1433; Database = SocialNetwork; User ID = sa; Password = <password12345>");
         }
 
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<MessageStatus> MessageStatuses { get; set; }
+        public DbSet<UserChat> UsersChats { get; set; }
+        public DbSet<UserFriends> UsersFriends { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -51,7 +53,7 @@ namespace NetworkDAL.Context
 
             var adminData = new User()
             {
-                Id = 0,
+                Id = 1,
                 Email = "e.myhalchuk@gmail.com",
                 NormalizedEmail = "E.MYHALCHUK@GMAIL.COM",
                 UserName = "AdminElya",
@@ -78,10 +80,18 @@ namespace NetworkDAL.Context
 
             builder.Entity<MessageStatus>().HasData(messageStatuses);
             builder.Entity<User>().HasData(adminData);
-            builder.Entity<IdentityUserRole<Guid>>().HasData(
+            builder.Entity<IdentityUserRole<int>>().HasData(
                 new IdentityUserRole<int> { RoleId = admin.Id, UserId = adminProfile.Id },
                 new IdentityUserRole<int> { RoleId = guest.Id, UserId = adminProfile.Id },
                 new IdentityUserRole<int> { RoleId = registered.Id, UserId = adminProfile.Id });
+            
+            builder.Entity<UserProfile>().HasMany(x => x.Chats).WithOne(x => x.User).HasForeignKey(x => x.UserId);
+            builder.Entity<Chat>().HasMany(x => x.Users).WithOne(x => x.Chat).HasForeignKey(x => x.ChatId);
+            builder.Entity<UserProfile>().HasOne(x => x.AppUser).WithOne(x => x.UserProfile).HasForeignKey<UserProfile>(x => x.Id);
+            builder.Entity<UserFriends>().HasOne(x => x.User).WithMany(x => x.ThisUserFriends).HasForeignKey(x => x.UserId); 
+            builder.Entity<UserFriends>().HasOne(x => x.Friend).WithMany(x => x.UserIsFriend).HasForeignKey(x => x.FriendId); 
+            
+
         }
 
         

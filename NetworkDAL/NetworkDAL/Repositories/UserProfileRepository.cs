@@ -28,7 +28,8 @@ namespace NetworkDAL.Repositories
         public async Task<IQueryable<UserProfile>> GetAllWithDetailsAsync()
         {
             var userProfiles = await _context.UserProfiles
-                .Include(user => user.Friends)
+                .Include(user => user.ThisUserFriends)
+                .Include(user => user.UserIsFriend)
                 .Include(user => user.Messages)
                 .Include(user => user.Chats).ToListAsync();
             return userProfiles.AsQueryable();
@@ -42,9 +43,25 @@ namespace NetworkDAL.Repositories
         public async Task<UserProfile> GetByIdWithDetailsAsync(int id)
         {
             return await _context.UserProfiles
-                .Include(user => user.Friends)
+                .Include(user => user.ThisUserFriends)
+                .Include(user => user.UserIsFriend)
                 .Include(user => user.Messages)
                 .Include(user => user.Chats).FirstOrDefaultAsync(user => user.Id == id);
+        }
+
+        public async Task<IQueryable<UserProfile>> GetUserFriendsByIdAsync(int id)
+        {
+            var user = await _context.UserProfiles.FindAsync(id);
+            var friends = Enumerable.Empty<UserProfile>().AsQueryable();
+            if(user != null && user.ThisUserFriends.Count != 0)
+            {
+                foreach(var friendId in user.ThisUserFriends)
+                {
+                    var friend = await _context.UserProfiles.FindAsync(friendId);
+                    friends.Append(friend);
+                }
+            }
+            return friends;
         }
     }
 }

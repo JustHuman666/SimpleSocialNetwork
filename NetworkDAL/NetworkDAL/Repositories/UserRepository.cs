@@ -92,7 +92,7 @@ namespace NetworkDAL.Repositories
                 user.NormalizedUserName = item.UserName.ToUpper();
                 user.UserProfile.FirstName = item.UserProfile.FirstName;
                 user.UserProfile.LastName = item.UserProfile.LastName;
-                user.UserProfile.PhoneNumber = item.UserProfile.PhoneNumber;
+                user.PhoneNumber = item.PhoneNumber;
                 user.UserProfile.Country = item.UserProfile.Country;
             }
         }

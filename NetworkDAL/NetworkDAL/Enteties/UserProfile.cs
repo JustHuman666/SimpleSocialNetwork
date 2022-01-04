@@ -11,7 +11,8 @@ namespace NetworkDAL.Enteties
     /// </summary>    
     public class UserProfile
     {
-        [ForeignKey("ApplicationUser")]
+        public virtual User AppUser { get; set; }
+        [ForeignKey("UserId")]
         public int Id { get; set; }
 
         [Required]
@@ -22,17 +23,16 @@ namespace NetworkDAL.Enteties
         [StringLength(30)]
         public string LastName { get; set; }
 
-        [Phone]
-        public string PhoneNumber { get; set; }
-
         public string Country { get; set; }
 
-        public virtual ICollection<UserProfile> Friends { get; set; }
+        public virtual ICollection<UserFriends> UserIsFriend { get; set; }
 
-        public virtual ICollection<Chat> Chats { get; set; }
+        public virtual ICollection<UserFriends> ThisUserFriends { get; set; }
+
+        public virtual ICollection<UserChat> Chats { get; set; }
 
         public virtual ICollection<Message> Messages { get; set; }
 
-        public virtual User AppUser { get; set; }
+        
     }
 }
