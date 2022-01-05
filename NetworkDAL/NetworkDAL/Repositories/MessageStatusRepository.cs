@@ -13,7 +13,7 @@ namespace NetworkDAL.Repositories
     /// <summary>
     /// Class that represents a message status repository
     /// </summary>
-    class MessageStatusRepository : IRepository<MessageStatus>
+    class MessageStatusRepository : IMessageStatusRepository
     {
         private readonly NetworkContext _context;
 
@@ -25,23 +25,16 @@ namespace NetworkDAL.Repositories
         {
             _context = context;
         }
-        public async Task CreateAsync(MessageStatus item)
-        {
-            await _context.MessageStatuses.AddAsync(item);
-        }
-
-        public void Delete(int id)
-        {
-            var status = _context.MessageStatuses.Find(id);
-            if(status != null)
-            {
-                _context.MessageStatuses.Remove(status);
-            }
-        }
 
         public async Task<IQueryable<MessageStatus>> GetAllAsync()
         {
             var statuses = await _context.MessageStatuses.ToListAsync();
+            return statuses.AsQueryable();
+        }
+
+        public async Task<IQueryable<MessageStatus>> GetAllWithDetailsAsync()
+        {
+            var statuses = await _context.MessageStatuses.Include(status => status.Messages).ToListAsync();
             return statuses.AsQueryable();
         }
 
@@ -50,9 +43,9 @@ namespace NetworkDAL.Repositories
             return await _context.MessageStatuses.FindAsync(id);
         }
 
-        public void UpdateAsync(MessageStatus item)
+        public async Task<MessageStatus> GetByIdWithDetailsAsync(int id)
         {
-           _context.Entry(item).State = EntityState.Modified;
+            return await _context.MessageStatuses.Include(status => status.Messages).FirstOrDefaultAsync(status => status.Id == id);
         }
     }
 }

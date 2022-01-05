@@ -49,7 +49,7 @@ namespace NetworkDAL.Repositories
             get { return _chatRepository ??= new ChatRepository(_context); }
         }
 
-        public IRepository<MessageStatus> MessageStatuses 
+        public IMessageStatusRepository MessageStatuses 
         {
             get { return _messageStatusRepository ??= new MessageStatusRepository(_context); }
         }

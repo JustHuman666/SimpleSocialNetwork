@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkDAL", "NetworkDAL\NetworkDAL.csproj", "{EEBF9CEF-7AD5-4B61-B8C3-F51B62D1C2C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkDAL", "NetworkDAL\NetworkDAL.csproj", "{EEBF9CEF-7AD5-4B61-B8C3-F51B62D1C2C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkBLL", "NetworkBLL\NetworkBLL.csproj", "{BBCA2382-BCE8-4558-8D15-DCB35E1FC798}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{EEBF9CEF-7AD5-4B61-B8C3-F51B62D1C2C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEBF9CEF-7AD5-4B61-B8C3-F51B62D1C2C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEBF9CEF-7AD5-4B61-B8C3-F51B62D1C2C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBCA2382-BCE8-4558-8D15-DCB35E1FC798}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBCA2382-BCE8-4558-8D15-DCB35E1FC798}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBCA2382-BCE8-4558-8D15-DCB35E1FC798}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBCA2382-BCE8-4558-8D15-DCB35E1FC798}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

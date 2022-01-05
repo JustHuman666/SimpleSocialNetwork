@@ -34,7 +34,7 @@ namespace NetworkDAL.Interfaces.BaseInterfaces
         /// <summary>
         /// Repository for messages statuses
         /// </summary>
-        IRepository<MessageStatus> MessageStatuses { get; }
+        IMessageStatusRepository MessageStatuses { get; }
 
         /// <summary>
         /// Repository for messages
