@@ -10,8 +10,8 @@ using NetworkDAL.Context;
 namespace NetworkDAL.Migrations
 {
     [DbContext(typeof(NetworkContext))]
-    [Migration("20220104195557_PhoneNumberDeleted")]
-    partial class PhoneNumberDeleted
+    [Migration("20220106143712_NewUserAddedToContext")]
+    partial class NewUserAddedToContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -106,17 +106,17 @@ namespace NetworkDAL.Migrations
                         new
                         {
                             UserId = 1,
-                            RoleId = 2
-                        },
-                        new
-                        {
-                            UserId = 1,
                             RoleId = 1
                         },
                         new
                         {
                             UserId = 1,
-                            RoleId = 3
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 2
                         });
                 });
 
@@ -173,12 +173,12 @@ namespace NetworkDAL.Migrations
                     b.Property<DateTime>("SendingTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("statusId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -186,7 +186,7 @@ namespace NetworkDAL.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.HasIndex("statusId");
+                    b.HasIndex("StatusId");
 
                     b.ToTable("Messages");
                 });
@@ -260,21 +260,14 @@ namespace NetworkDAL.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "aea218e9-d3c8-4480-91e9-87efdc8f99b4",
-                            Name = "Guest",
-                            NormalizedName = "GUEST"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ConcurrencyStamp = "98c8ffff-963a-466b-adff-9bbe74ff5284",
+                            ConcurrencyStamp = "8977e5f2-74ba-4a3b-883a-fb7fd05b8272",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = 3,
-                            ConcurrencyStamp = "c3136a7f-7933-4031-986e-f3092d4495b1",
+                            Id = 2,
+                            ConcurrencyStamp = "cbc63fba-2646-4d20-916a-a67107421c55",
                             Name = "Registered",
                             NormalizedName = "REGISTERED"
                         });
@@ -351,16 +344,33 @@ namespace NetworkDAL.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e80e0529-af60-42ae-a70c-8980ba06047d",
+                            ConcurrencyStamp = "d1643bb6-4eb4-45a5-b1a3-c1cff6ecf82c",
                             Email = "e.myhalchuk@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "E.MYHALCHUK@GMAIL.COM",
                             NormalizedUserName = "ADMINELYA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEH8pN+HuoS+v4rEeomRMr163GjstDH/m9kkV44HXzQAjZZVfLR+3bL8QhcYKsWecaQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPfWSwtRdC8FSXhL2LNtSClXQTL1udwcXp95oy6t+gHxXnUi+8a1SUJXjS77eIbvLQ==",
+                            PhoneNumber = "+380671234567",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "AdminElya"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d32d077f-847d-4a67-957a-47feb70927f0",
+                            Email = "default@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "DEFAULT@GMAIL.COM",
+                            NormalizedUserName = "DEFAULT",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBWIMOm3zlcOJzKkaDoMk7co6dqnzr1Detr2yZtI1E3pb+tFueP2Dq6ovrvIP3K8ew==",
+                            PhoneNumber = "+380000000000",
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            UserName = "Default"
                         });
                 });
 
@@ -396,6 +406,9 @@ namespace NetworkDAL.Migrations
                     b.Property<int?>("FriendId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
@@ -429,6 +442,22 @@ namespace NetworkDAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserProfiles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Country = "Ukraine",
+                            FirstName = "Eleonora",
+                            LastName = "Mykhalchuk"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Country = "Ukraine",
+                            FirstName = "DefaultName",
+                            LastName = "DefaultLast"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -498,7 +527,7 @@ namespace NetworkDAL.Migrations
 
                     b.HasOne("NetworkDAL.Enteties.MessageStatus", "Status")
                         .WithMany("Messages")
-                        .HasForeignKey("statusId")
+                        .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

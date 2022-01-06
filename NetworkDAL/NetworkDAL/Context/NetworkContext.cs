@@ -21,18 +21,19 @@ namespace NetworkDAL.Context
         {
         }
 
-        public NetworkContext(DbContextOptions options) : base(options)
-        {
-        }
+        //public NetworkContext(DbContextOptions options) : base(options)
+        //{
+        //}
 
-        public NetworkContext():base()
-        {
-        }
+        //public NetworkContext() : base()
+        //{
+        //}
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server = localhost, 1433; Database = SocialNetwork; User ID = sa; Password = <password12345>");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(@"Server = localhost, 1433; Database = SocialNetwork; User ID = sa; Password = <password12345>")
+        //        .EnableSensitiveDataLogging();
+        //}
 
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
@@ -45,16 +46,16 @@ namespace NetworkDAL.Context
         {
             base.OnModelCreating(builder);
 
-            var guest = new Role() { Id = 1, Name = "Guest", NormalizedName = "GUEST" };
-            var admin = new Role() { Id = 2, Name = "Admin", NormalizedName = "ADMIN" };
-            var registered = new Role() { Id = 3, Name = "Registered", NormalizedName = "REGISTERED" };
+            var admin = new Role() { Id = 1, Name = "Admin", NormalizedName = "ADMIN" };
+            var registered = new Role() { Id = 2, Name = "Registered", NormalizedName = "REGISTERED" };
 
-            builder.Entity<Role>().HasData(guest, admin, registered);
+            builder.Entity<Role>().HasData(admin, registered);
 
             var adminData = new User()
             {
                 Id = 1,
                 Email = "e.myhalchuk@gmail.com",
+                PhoneNumber = "+380671234567",
                 NormalizedEmail = "E.MYHALCHUK@GMAIL.COM",
                 UserName = "AdminElya",
                 NormalizedUserName = "ADMINELYA",
@@ -67,8 +68,26 @@ namespace NetworkDAL.Context
                 Country = "Ukraine"
             };
 
+            var defaultUser = new User()
+            {
+                Id = 2,
+                Email = "default@gmail.com",
+                PhoneNumber = "+380000000000",
+                NormalizedEmail = "DEFAULT@GMAIL.COM",
+                UserName = "Default",
+                NormalizedUserName = "DEFAULT",
+            };
+            var defaultProfile = new UserProfile()
+            {
+                Id = defaultUser.Id,
+                FirstName = "DefaultName",
+                LastName = "DefaultLast",
+                Country = "Ukraine"
+            };
+
             var passwordHasher = new PasswordHasher<User>();
-            adminData.PasswordHash = passwordHasher.HashPassword(adminData, "MyPassword");
+            adminData.PasswordHash = passwordHasher.HashPassword(adminData, "AdminPassword");
+            defaultUser.PasswordHash = passwordHasher.HashPassword(defaultUser, "DefaultPassword");
 
             var messageStatuses = new[]
             {
@@ -79,18 +98,21 @@ namespace NetworkDAL.Context
             };
 
             builder.Entity<MessageStatus>().HasData(messageStatuses);
-            builder.Entity<User>().HasData(adminData);
+
+            builder.Entity<User>().HasData(adminData, defaultUser);
+            builder.Entity<UserProfile>().HasData(adminProfile, defaultProfile);
+
             builder.Entity<IdentityUserRole<int>>().HasData(
                 new IdentityUserRole<int> { RoleId = admin.Id, UserId = adminProfile.Id },
-                new IdentityUserRole<int> { RoleId = guest.Id, UserId = adminProfile.Id },
-                new IdentityUserRole<int> { RoleId = registered.Id, UserId = adminProfile.Id });
-            
+                new IdentityUserRole<int> { RoleId = registered.Id, UserId = adminProfile.Id },
+                new IdentityUserRole<int> { RoleId = registered.Id, UserId = defaultUser.Id });
+
             builder.Entity<UserProfile>().HasMany(x => x.Chats).WithOne(x => x.User).HasForeignKey(x => x.UserId);
             builder.Entity<Chat>().HasMany(x => x.Users).WithOne(x => x.Chat).HasForeignKey(x => x.ChatId);
             builder.Entity<UserProfile>().HasOne(x => x.AppUser).WithOne(x => x.UserProfile).HasForeignKey<UserProfile>(x => x.Id);
             builder.Entity<UserFriends>().HasOne(x => x.User).WithMany(x => x.ThisUserFriends).HasForeignKey(x => x.UserId); 
-            builder.Entity<UserFriends>().HasOne(x => x.Friend).WithMany(x => x.UserIsFriend).HasForeignKey(x => x.FriendId); 
-            
+            builder.Entity<UserFriends>().HasOne(x => x.Friend).WithMany(x => x.UserIsFriend).HasForeignKey(x => x.FriendId);
+
 
         }
 

@@ -10,7 +10,7 @@ using NetworkDAL.Context;
 namespace NetworkDAL.Migrations
 {
     [DbContext(typeof(NetworkContext))]
-    [Migration("20220104194617_InitialCreate")]
+    [Migration("20220105194849_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,17 +106,12 @@ namespace NetworkDAL.Migrations
                         new
                         {
                             UserId = 1,
-                            RoleId = 2
-                        },
-                        new
-                        {
-                            UserId = 1,
                             RoleId = 1
                         },
                         new
                         {
                             UserId = 1,
-                            RoleId = 3
+                            RoleId = 2
                         });
                 });
 
@@ -173,12 +168,12 @@ namespace NetworkDAL.Migrations
                     b.Property<DateTime>("SendingTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("statusId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -186,7 +181,7 @@ namespace NetworkDAL.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.HasIndex("statusId");
+                    b.HasIndex("StatusId");
 
                     b.ToTable("Messages");
                 });
@@ -260,21 +255,14 @@ namespace NetworkDAL.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "cb98c801-b4e0-4fd8-ba4d-0640de1b71b7",
-                            Name = "Guest",
-                            NormalizedName = "GUEST"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ConcurrencyStamp = "e8e7ca38-55fa-4ab2-ae77-051128d0e07a",
+                            ConcurrencyStamp = "b5c72c2a-738a-415d-a864-125d30a0847a",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = 3,
-                            ConcurrencyStamp = "f3ae34cc-ac4e-4140-8af6-c7b62f2dc351",
+                            Id = 2,
+                            ConcurrencyStamp = "bef425e2-0a3a-47ea-9f50-59bff3c052dd",
                             Name = "Registered",
                             NormalizedName = "REGISTERED"
                         });
@@ -351,13 +339,14 @@ namespace NetworkDAL.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5402c517-a9c5-4863-975f-d79ba40fb9e5",
+                            ConcurrencyStamp = "b4a7fea8-80d1-4718-a830-d8ce95051ab3",
                             Email = "e.myhalchuk@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "E.MYHALCHUK@GMAIL.COM",
                             NormalizedUserName = "ADMINELYA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBbwtjSXDi3O+hEKOGy6V76UaKxluIxMPGWRkhZGYUk9BKsXwW7tBrRhv6CTziDcog==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDwmQXtMxVjcBgfsc9OD/s+65L6OBtQzEPswgqueSZaJ1IE0G3mD5zQ5FWTC7yBeyQ==",
+                            PhoneNumber = "+380671234567",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "AdminElya"
@@ -425,9 +414,6 @@ namespace NetworkDAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -501,7 +487,7 @@ namespace NetworkDAL.Migrations
 
                     b.HasOne("NetworkDAL.Enteties.MessageStatus", "Status")
                         .WithMany("Messages")
-                        .HasForeignKey("statusId")
+                        .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

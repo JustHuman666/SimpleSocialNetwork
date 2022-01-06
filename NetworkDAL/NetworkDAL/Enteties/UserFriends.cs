@@ -14,5 +14,10 @@ namespace NetworkDAL.Enteties
         public virtual UserProfile Friend { get; set; }
         [ForeignKey("Friend")]
         public int? FriendId { get; set; }
+
+        /// <summary>
+        /// Represent if user accept the application for friendship
+        /// </summary>
+        public bool IsConfirmed { get; set; }
     }
 }

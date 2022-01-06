@@ -188,7 +188,6 @@ namespace NetworkDAL.Migrations
                     Id = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 30, nullable: false),
                     LastName = table.Column<string>(maxLength: 30, nullable: false),
-                    PhoneNumber = table.Column<string>(nullable: true),
                     Country = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -212,7 +211,7 @@ namespace NetworkDAL.Migrations
                     SendingTime = table.Column<DateTime>(nullable: false),
                     SenderId = table.Column<int>(nullable: false),
                     ChatId = table.Column<int>(nullable: false),
-                    statusId = table.Column<int>(nullable: false)
+                    StatusId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -230,8 +229,8 @@ namespace NetworkDAL.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Messages_MessageStatuses_statusId",
-                        column: x => x.statusId,
+                        name: "FK_Messages_MessageStatuses_StatusId",
+                        column: x => x.StatusId,
                         principalTable: "MessageStatuses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -294,15 +293,14 @@ namespace NetworkDAL.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "cb98c801-b4e0-4fd8-ba4d-0640de1b71b7", "Guest", "GUEST" },
-                    { 2, "e8e7ca38-55fa-4ab2-ae77-051128d0e07a", "Admin", "ADMIN" },
-                    { 3, "f3ae34cc-ac4e-4140-8af6-c7b62f2dc351", "Registered", "REGISTERED" }
+                    { 1, "b5c72c2a-738a-415d-a864-125d30a0847a", "Admin", "ADMIN" },
+                    { 2, "bef425e2-0a3a-47ea-9f50-59bff3c052dd", "Registered", "REGISTERED" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, "5402c517-a9c5-4863-975f-d79ba40fb9e5", "e.myhalchuk@gmail.com", false, false, null, "E.MYHALCHUK@GMAIL.COM", "ADMINELYA", "AQAAAAEAACcQAAAAEBbwtjSXDi3O+hEKOGy6V76UaKxluIxMPGWRkhZGYUk9BKsXwW7tBrRhv6CTziDcog==", null, false, null, false, "AdminElya" });
+                values: new object[] { 1, 0, "b4a7fea8-80d1-4718-a830-d8ce95051ab3", "e.myhalchuk@gmail.com", false, false, null, "E.MYHALCHUK@GMAIL.COM", "ADMINELYA", "AQAAAAEAACcQAAAAEDwmQXtMxVjcBgfsc9OD/s+65L6OBtQzEPswgqueSZaJ1IE0G3mD5zQ5FWTC7yBeyQ==", "+380671234567", false, null, false, "AdminElya" });
 
             migrationBuilder.InsertData(
                 table: "MessageStatuses",
@@ -318,17 +316,12 @@ namespace NetworkDAL.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { 1, 2 });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "UserId", "RoleId" },
                 values: new object[] { 1, 1 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { 1, 3 });
+                values: new object[] { 1, 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -380,9 +373,9 @@ namespace NetworkDAL.Migrations
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_statusId",
+                name: "IX_Messages_StatusId",
                 table: "Messages",
-                column: "statusId");
+                column: "StatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UsersChats_ChatId",

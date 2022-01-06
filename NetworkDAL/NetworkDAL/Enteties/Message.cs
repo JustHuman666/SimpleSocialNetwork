@@ -43,7 +43,7 @@ namespace NetworkDAL.Enteties
         /// </summary>
         public virtual MessageStatus Status { get; set; }
         [ForeignKey("Status")]
-        public int statusId { get; set; }
+        public int StatusId { get; set; }
 
     }
 }
