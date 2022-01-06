@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkDAL", "NetworkDAL\Ne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkBLL", "NetworkBLL\NetworkBLL.csproj", "{BBCA2382-BCE8-4558-8D15-DCB35E1FC798}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkAPI", "NetworkAPI\NetworkAPI.csproj", "{D367FB24-59EB-417A-92A8-128912B50797}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{BBCA2382-BCE8-4558-8D15-DCB35E1FC798}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBCA2382-BCE8-4558-8D15-DCB35E1FC798}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBCA2382-BCE8-4558-8D15-DCB35E1FC798}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D367FB24-59EB-417A-92A8-128912B50797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D367FB24-59EB-417A-92A8-128912B50797}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D367FB24-59EB-417A-92A8-128912B50797}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D367FB24-59EB-417A-92A8-128912B50797}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
