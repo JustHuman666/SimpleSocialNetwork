@@ -57,7 +57,7 @@ namespace NetworkDAL.Repositories
 
         public IQueryable<User> GetAll()
         {
-            return _userManager.Users;
+            return _userManager.Users.AsQueryable();
         }
 
 
@@ -94,6 +94,8 @@ namespace NetworkDAL.Repositories
                 user.UserProfile.LastName = item.UserProfile.LastName;
                 user.PhoneNumber = item.PhoneNumber;
                 user.UserProfile.Country = item.UserProfile.Country;
+                user.UserProfile.ThisUserFriends = item.UserProfile.ThisUserFriends;
+                user.UserProfile.UserIsFriend = item.UserProfile.UserIsFriend;
             }
         }
 

@@ -24,7 +24,14 @@ namespace NetworkDAL.Interfaces
         /// To get all frieds of chosen user
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>Collection of all confirmedfriends</returns>
         Task<IQueryable<UserProfile>> GetUserFriendsByIdAsync(int id);
+
+        /// <summary>
+        /// To get all invitation to be a friend of chosen user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Collection of all invitation</returns>
+        Task<IQueryable<UserProfile>> GetInvitationForFriendshipByIdAsync(int id);
     }
 }

@@ -13,7 +13,7 @@ namespace NetworkDAL.Repositories
     /// <summary>
     /// Class that represents a message status repository
     /// </summary>
-    class MessageStatusRepository : IMessageStatusRepository
+    public class MessageStatusRepository : IMessageStatusRepository
     {
         private readonly NetworkContext _context;
 

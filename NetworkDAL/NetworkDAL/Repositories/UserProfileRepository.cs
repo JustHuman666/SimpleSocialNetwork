@@ -49,19 +49,42 @@ namespace NetworkDAL.Repositories
                 .Include(user => user.Chats).FirstOrDefaultAsync(user => user.Id == id);
         }
 
+        public async Task<IQueryable<UserProfile>> GetInvitationForFriendshipByIdAsync(int id)
+        {
+            var user = await _context.UserProfiles.FindAsync(id);
+            var friends = Enumerable.Empty<UserProfile>().AsQueryable();
+            if (user != null && user.ThisUserFriends.Count != 0)
+            {
+                foreach (var friendship in user.ThisUserFriends)
+                {
+                    if (!friendship.IsConfirmed)
+                    {
+                        var friend = await _context.UserProfiles.FindAsync(friendship);
+                        friends.Append(friend);
+                    }
+                }
+            }
+            return friends;
+        }
+
         public async Task<IQueryable<UserProfile>> GetUserFriendsByIdAsync(int id)
         {
             var user = await _context.UserProfiles.FindAsync(id);
             var friends = Enumerable.Empty<UserProfile>().AsQueryable();
             if(user != null && user.ThisUserFriends.Count != 0)
             {
-                foreach(var friendId in user.ThisUserFriends)
+                foreach(var friendship in user.ThisUserFriends)
                 {
-                    var friend = await _context.UserProfiles.FindAsync(friendId);
-                    friends.Append(friend);
+                    if(friendship.IsConfirmed)
+                    {
+                        var friend = await _context.UserProfiles.FindAsync(friendship);
+                        friends.Append(friend);
+                    }
                 }
             }
             return friends;
         }
+
+
     }
 }
