@@ -50,7 +50,6 @@ namespace NetworkAPI
 
 
             services.AddScoped<IChatRepository, ChatRepository>();
-            services.AddScoped<IMessageStatusRepository, MessageStatusRepository>();
             services.AddScoped<IRepository<Message>, MessageRepository>();
             services.AddScoped<IUserProfileRepository, UserProfileRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

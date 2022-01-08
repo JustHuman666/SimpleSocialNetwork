@@ -10,9 +10,9 @@ namespace NetworkBLL.EntetiesDto
     public class LoginUserInfo
     {
         public string Token { get; }
-        public string UserId { get; }
+        public int UserId { get; }
 
-        public LoginUserInfo(string token, string id)
+        public LoginUserInfo(string token, int id)
         {
             Token = token;
             UserId = id;

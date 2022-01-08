@@ -19,7 +19,7 @@ namespace NetworkBLL.EntetiesDto
 
         public int ChatId { get; set; }
 
-        public int StatusId { get; set; }
+        public bool Status { get; set; }
 
     }
 }

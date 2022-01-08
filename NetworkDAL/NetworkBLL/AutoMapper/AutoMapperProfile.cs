@@ -16,7 +16,6 @@ namespace NetworkBLL.AutoMapper
             CreateMap<User, UserDto>()
                 .ForMember(p => p.FirstName, c => c.MapFrom(src => src.UserProfile.FirstName))
                 .ForMember(p => p.LastName, c => c.MapFrom(src => src.UserProfile.LastName))
-                .ForMember(p => p.LastName, c => c.MapFrom(src => src.UserProfile.Country))
                 .ReverseMap();
 
             CreateMap<UserProfile, UserProfileDto>()
@@ -32,10 +31,6 @@ namespace NetworkBLL.AutoMapper
             //.ForMember(p => p.UserIsFriendIds, c => c.MapFrom(src => src.UserIsFriend.Select(item => item.UserId)))
 
             CreateMap<UserProfileDto, UserDto>().ReverseMap();
-
-            CreateMap<MessageStatus, MessageStatusDto>()
-                .ForMember(p => p.MessageIds, c => c.MapFrom(src => src.Messages.Select(item => item.Id)))
-                .ReverseMap();
 
             CreateMap<Message, MessageDto>().ReverseMap();
 

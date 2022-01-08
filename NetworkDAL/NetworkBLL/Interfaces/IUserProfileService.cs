@@ -20,11 +20,18 @@ namespace NetworkBLL.Interfaces
         Task<UserProfileDto> GetProfileByIdAsync(int id);
 
         /// <summary>
-        /// To get all frieds of chosen user
+        /// To get all friends of chosen user
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">The id of user whose friends should be found</param>
+        /// <returns>Collection of users profiles who are confirmed friends of this user</returns>
         Task<IQueryable<UserProfileDto>> GetUserFriendsByIdAsync(int id);
+
+        /// <summary>
+        /// To get all invitation to be a friend for chosen user
+        /// </summary>
+        /// <param name="id">The id of user whose invitations should be found</param>
+        /// <returns>Collection of users profiles who are not confirmed as friends of this user</returns>
+        Task<IQueryable<UserProfileDto>> GetUserInvitationByIdAsync(int id);
 
         /// <summary>
         /// To get an instance of user profile with additional information 

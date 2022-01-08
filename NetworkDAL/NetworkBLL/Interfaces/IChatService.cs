@@ -17,7 +17,7 @@ namespace NetworkBLL.Interfaces
         /// </summary>
         /// <param name="id">The id of chat</param>
         /// <returns>Collection of users who are in this chat</returns>
-        Task<IQueryable<UserProfileDto>> GetAllUsersOfChatAsync(int id);
+        Task<IQueryable<UserDto>> GetAllUsersOfChatAsync(int id);
 
         /// <summary>
         /// To get all chats of chosen user
