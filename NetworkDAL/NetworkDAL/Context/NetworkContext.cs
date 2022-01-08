@@ -21,24 +21,23 @@ namespace NetworkDAL.Context
         {
         }
 
-        //public NetworkContext(DbContextOptions options) : base(options)
-        //{
-        //}
+        public NetworkContext(DbContextOptions options) : base(options)
+        {
+        }
 
-        //public NetworkContext() : base()
-        //{
-        //}
+        public NetworkContext() : base()
+        {
+        }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(@"Server = localhost, 1433; Database = SocialNetwork; User ID = sa; Password = <password12345>")
-        //        .EnableSensitiveDataLogging();
-        //}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Server = localhost, 1433; Database = SocialNetwork; User ID = sa; Password = <password12345>")
+                .EnableSensitiveDataLogging();
+        }
 
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
-        public DbSet<MessageStatus> MessageStatuses { get; set; }
         public DbSet<UserChat> UsersChats { get; set; }
         public DbSet<UserFriends> UsersFriends { get; set; }
 
@@ -65,7 +64,6 @@ namespace NetworkDAL.Context
                 Id = adminData.Id,
                 FirstName = "Eleonora",
                 LastName = "Mykhalchuk",
-                Country = "Ukraine"
             };
 
             var defaultUser = new User()
@@ -82,22 +80,11 @@ namespace NetworkDAL.Context
                 Id = defaultUser.Id,
                 FirstName = "DefaultName",
                 LastName = "DefaultLast",
-                Country = "Ukraine"
             };
 
             var passwordHasher = new PasswordHasher<User>();
             adminData.PasswordHash = passwordHasher.HashPassword(adminData, "AdminPassword");
             defaultUser.PasswordHash = passwordHasher.HashPassword(defaultUser, "DefaultPassword");
-
-            var messageStatuses = new[]
-            {
-                new MessageStatus(){ Id = 1, StatusName = "Sent"},
-                new MessageStatus(){ Id = 2, StatusName = "Seen"},
-                new MessageStatus(){ Id = 3, StatusName = "OnWay"},
-                new MessageStatus(){ Id = 4, StatusName = "Error"},
-            };
-
-            builder.Entity<MessageStatus>().HasData(messageStatuses);
 
             builder.Entity<User>().HasData(adminData, defaultUser);
             builder.Entity<UserProfile>().HasData(adminProfile, defaultProfile);
@@ -116,7 +103,6 @@ namespace NetworkDAL.Context
 
         }
 
-        
     }
 
 }

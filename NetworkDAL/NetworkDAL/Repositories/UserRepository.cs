@@ -81,6 +81,11 @@ namespace NetworkDAL.Repositories
             return await _userManager.Users.Include(user => user.UserProfile).FirstOrDefaultAsync(user => user.Id == id);
         }
 
+        public async Task<User> GetByPhoneNumberAsync(string phoneNumber)
+        {
+            return await _userManager.Users.FirstOrDefaultAsync(user => user.PhoneNumber == phoneNumber);
+        }
+
         public async Task UpdateAsync(User item)
         {
             var user = await GetByIdWithDetailsAsync(item.Id);
@@ -93,7 +98,6 @@ namespace NetworkDAL.Repositories
                 user.UserProfile.FirstName = item.UserProfile.FirstName;
                 user.UserProfile.LastName = item.UserProfile.LastName;
                 user.PhoneNumber = item.PhoneNumber;
-                user.UserProfile.Country = item.UserProfile.Country;
                 user.UserProfile.ThisUserFriends = item.UserProfile.ThisUserFriends;
                 user.UserProfile.UserIsFriend = item.UserProfile.UserIsFriend;
             }

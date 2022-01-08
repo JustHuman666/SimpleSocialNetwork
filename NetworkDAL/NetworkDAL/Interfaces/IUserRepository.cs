@@ -38,6 +38,13 @@ namespace NetworkDAL.Interfaces
         Task<User> GetByEmailAsync(string email);
 
         /// <summary>
+        /// To get an instance of the user with such phone number
+        /// </summary>
+        /// <param name="phoneNumber">Phone number of user who is found</param>
+        /// <returns>An instance of found user</returns>
+        Task<User> GetByPhoneNumberAsync(string phoneNumber);
+
+        /// <summary>
         /// To check if password is correct and true for this user
         /// </summary>
         /// <param name="item">The instance of user whose password is compared with given</param>

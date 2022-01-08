@@ -32,11 +32,6 @@ namespace NetworkDAL.Interfaces.BaseInterfaces
         IChatRepository Chats { get; }
 
         /// <summary>
-        /// Repository for messages statuses
-        /// </summary>
-        IMessageStatusRepository MessageStatuses { get; }
-
-        /// <summary>
         /// Repository for messages
         /// </summary>
         IRepository<Message> Messages { get; }

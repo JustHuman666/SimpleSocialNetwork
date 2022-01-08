@@ -18,7 +18,6 @@ namespace NetworkDAL.Repositories
         private readonly NetworkContext _context;
         private UserProfileRepository _userProfileRepository;
         private MessageRepository _messageRepository;
-        private MessageStatusRepository _messageStatusRepository;
         private ChatRepository _chatRepository;
 
         /// <summary>
@@ -47,11 +46,6 @@ namespace NetworkDAL.Repositories
         public IChatRepository Chats 
         {
             get { return _chatRepository ??= new ChatRepository(_context); }
-        }
-
-        public IMessageStatusRepository MessageStatuses 
-        {
-            get { return _messageStatusRepository ??= new MessageStatusRepository(_context); }
         }
 
         public IRepository<Message> Messages 

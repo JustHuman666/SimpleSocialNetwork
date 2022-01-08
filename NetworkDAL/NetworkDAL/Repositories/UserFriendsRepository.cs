@@ -47,7 +47,7 @@ namespace NetworkDAL.Repositories
             return await _context.UsersFriends.FindAsync(id);
         }
 
-        public void UpdateAsync(UserFriends item)
+        public void Update(UserFriends item)
         {
             _context.Entry(item).State = EntityState.Modified;
         }

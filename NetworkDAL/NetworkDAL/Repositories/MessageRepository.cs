@@ -49,7 +49,7 @@ namespace NetworkDAL.Repositories
             return await _context.Messages.FindAsync(id);
         }
 
-        public void UpdateAsync(Message item)
+        public void Update(Message item)
         {
             _context.Entry(item).State = EntityState.Modified;
         }

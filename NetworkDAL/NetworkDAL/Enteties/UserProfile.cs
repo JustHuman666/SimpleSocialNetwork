@@ -23,8 +23,6 @@ namespace NetworkDAL.Enteties
         [StringLength(30)]
         public string LastName { get; set; }
 
-        public string Country { get; set; }
-
         public virtual ICollection<UserFriends> UserIsFriend { get; set; }
 
         public virtual ICollection<UserFriends> ThisUserFriends { get; set; }

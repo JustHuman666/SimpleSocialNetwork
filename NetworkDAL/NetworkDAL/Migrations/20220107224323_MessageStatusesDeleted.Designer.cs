@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetworkDAL.Context;
 
 namespace NetworkDAL.Migrations
 {
     [DbContext(typeof(NetworkContext))]
-    partial class NetworkContextModelSnapshot : ModelSnapshot
+    [Migration("20220107224323_MessageStatusesDeleted")]
+    partial class MessageStatusesDeleted
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

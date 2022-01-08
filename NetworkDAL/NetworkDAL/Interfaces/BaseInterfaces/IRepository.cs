@@ -22,7 +22,7 @@ namespace NetworkDAL.Interfaces
         /// To update some information about chosen item in DB
         /// </summary>
         /// <param name="item">The instance of item of some type that should be changed</param>
-        void UpdateAsync(T item);
+        void Update(T item);
 
         /// <summary>
         /// To delete chosen item form DB by its unique id

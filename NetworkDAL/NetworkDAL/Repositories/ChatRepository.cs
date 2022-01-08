@@ -96,7 +96,7 @@ namespace NetworkDAL.Repositories
             return users;
         }
 
-        public void UpdateAsync(Chat item)
+        public void Update(Chat item)
         {
             _context.Entry(item).State = EntityState.Modified;
         }

@@ -39,11 +39,10 @@ namespace NetworkDAL.Enteties
         public int ChatId { get; set; }
 
         /// <summary>
-        /// Instance of message status for users
+        /// Instance of message status for users, true - if read, false - if only sent
         /// </summary>
-        public virtual MessageStatus Status { get; set; }
-        [ForeignKey("Status")]
-        public int StatusId { get; set; }
+        public virtual bool Status { get; set; }
+        
 
     }
 }
