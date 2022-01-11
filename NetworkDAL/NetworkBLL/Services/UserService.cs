@@ -72,7 +72,7 @@ namespace NetworkBLL.Services
             var result = await _db.Users.ChangePasswordAsync(user, oldPassword, newPassword);
             if(!result.Succeeded)
             {
-                throw new NetworkException("Old or new password is incorrect. New password should contain at least 6 characters," +
+                throw new NetworkException("Old or new password is incorrect. New password should contain at least 8 characters," +
                     "and include uppercase and special characters");
             }
             await _db.SaveAsync();
@@ -88,33 +88,6 @@ namespace NetworkBLL.Services
             }
             var result = await _db.Users.CheckPasswordAsync(user, password);
             return result;
-        }
-
-        public async Task ConfirmFriendsip(int userId, int friendToConfirmId)
-        {
-            var user = await _db.Users.GetByIdAsync(userId);
-            var friend = await _db.Users.GetByIdAsync(friendToConfirmId);
-            if(user == null || friend == null)
-            {
-                throw new NotFoundException("User does not exist");
-            }
-            var friendship = user.UserProfile.ThisUserFriends.FirstOrDefault(fr => fr.UserId == userId && fr.FriendId == friendToConfirmId);
-            if(friendship == null)
-            {
-                throw new NotFoundException("Such invitation for friendship does not exist");
-            }
-            if(friendship.IsConfirmed)
-            {
-                throw new NetworkException("This friendship is already confirmed");
-            }
-            friendship.IsConfirmed = true;
-            var friendDto = _mapper.Map<UserDto>(friend);
-            friendDto.UserProfile.UserTheirFriend[userId] = true;
-            friendDto.UserProfile.ThisUserFriends.Add(userId, true);
-            await _db.Users.UpdateAsync(user);
-            await _db.Users.UpdateAsync(_mapper.Map<User>(friendDto));
-
-            await _db.SaveAsync();
         }
 
         public async Task CreateUserWithRoleAsync(UserDto newUser, string password, string role)
@@ -168,47 +141,11 @@ namespace NetworkBLL.Services
             var result = await _db.Users.CreateAsync(userToCreate, password);
             if (!result.Succeeded)
             {
-                throw new NetworkException("Old or new password is incorrect. New password should contain at least 6 characters," +
+                throw new NetworkException("Password is incorrect. New password should contain at least 8 characters," +
                     "and include uppercase and special characters");
             }
-            await _db.Users.AddRoleAsync(userToCreate, role);
-            await _db.SaveAsync();
-        }
-
-        public async Task DeleteFriendByFriendId(int userId, int friendToDeleteId)
-        {
-            var user = await _db.Users.GetByIdAsync(userId);
-            var friend = await _db.Users.GetByIdAsync(friendToDeleteId);
-            if (user == null || friend == null)
-            {
-                throw new NotFoundException("User does not exist");
-            }
-            var friendship = user.UserProfile.ThisUserFriends.FirstOrDefault(fr => fr.UserId == userId && fr.FriendId == friendToDeleteId);
-            var invitation = user.UserProfile.UserIsFriend.FirstOrDefault(fr => fr.UserId == userId && fr.FriendId == friendToDeleteId);
-            if (friendship == null)
-            {
-                throw new NotFoundException("Such invitation for friendship does not exist");
-            }
-            if(invitation != null)
-            {
-                user.UserProfile.UserIsFriend.Remove(invitation);
-            }
-            user.UserProfile.ThisUserFriends.Remove(friendship);
-
-            var friendshipSecond = user.UserProfile.ThisUserFriends.FirstOrDefault(fr => fr.FriendId == userId && fr.UserId == friendToDeleteId);
-            var invitationSecond = user.UserProfile.UserIsFriend.FirstOrDefault(fr => fr.FriendId == userId && fr.UserId == friendToDeleteId);
-            if (friendshipSecond == null)
-            {
-                throw new NotFoundException("Such invitation for friendship does not exist");
-            }
-            if (invitationSecond != null)
-            {
-                friend.UserProfile.UserIsFriend.Remove(invitationSecond);
-            }
-            friend.UserProfile.ThisUserFriends.Remove(friendshipSecond);
-
-            await _db.Users.UpdateAsync(user);
-            await _db.Users.UpdateAsync(friend);
+            var createdUser = await _db.Users.GetByEmailAsync(userToCreate.Email);
+            await _db.Users.AddRoleAsync(createdUser, role);
             await _db.SaveAsync();
         }
 
@@ -234,14 +171,24 @@ namespace NetworkBLL.Services
             return roles;
         }
 
-        public IQueryable<UserDto> GetAllUsers()
+        public IEnumerable<UserDto> GetAllUsers()
         {
             var users = _db.Users.GetAll();
             if(users == null || users.Count() == 0)
             {
                 throw new NotFoundException("Any user does not exist");
             }
-            return _mapper.Map<IQueryable<UserDto>>(users);
+            return _mapper.Map<IEnumerable<UserDto>>(users);
+        }
+
+        public IEnumerable<UserDto> GetAllUsersWithDetails()
+        {
+            var users = _db.Users.GetAllWithDetails();
+            if (users == null || users.Count() == 0)
+            {
+                throw new NotFoundException("Any user does not exist");
+            }
+            return _mapper.Map<IEnumerable<UserDto>>(users);
         }
 
         public async Task<UserDto> GetUserByEmailAsync(string email)
@@ -262,7 +209,7 @@ namespace NetworkBLL.Services
             return _mapper.Map<UserDto>(user);
         }
 
-        public IQueryable<UserDto> GetUsersByFirstAndLastName(string firstName, string lastName)
+        public IEnumerable<UserDto> GetUsersByFirstAndLastName(string firstName, string lastName)
         {
             if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
             {
@@ -273,7 +220,7 @@ namespace NetworkBLL.Services
                 throw new NetworkException("Firstname and lastname cannot contain empty spaces");
             }
             var users = _db.Users.GetAll().Where(user => user.UserProfile.FirstName == firstName && user.UserProfile.LastName == lastName);
-            return _mapper.Map<IQueryable<UserDto>>(users);
+            return _mapper.Map<IEnumerable<UserDto>>(users);
         }
 
         public async Task<UserDto> GetUserByIdAsync(int id)
@@ -314,7 +261,7 @@ namespace NetworkBLL.Services
             return _mapper.Map<UserDto>(user);
         }
 
-        public UserDto GetUserByUserNameAsync(string userName)
+        public UserDto GetUserByUserName(string userName)
         {
             if (string.IsNullOrEmpty(userName))
             {
@@ -330,28 +277,6 @@ namespace NetworkBLL.Services
                 throw new NotFoundException("User does not exist");
             }
             return _mapper.Map<UserDto>(user);
-        }
-
-        public async Task SendInvitationForFriendshipAsync(int userId, int wantedFriendId)
-        {
-            var user = await _db.Users.GetByIdAsync(userId);
-            var friend = await _db.Users.GetByIdAsync(wantedFriendId);
-            if (user == null || friend == null)
-            {
-                throw new NotFoundException("User does not exist");
-            }
-            var friendship = user.UserProfile.ThisUserFriends.FirstOrDefault(fr => fr.UserId == userId && fr.FriendId == wantedFriendId);
-            if (friendship != null)
-            {
-                throw new NotFoundException("Such invitation for friendship already exist");
-            }
-            var userDto = _mapper.Map<UserDto>(user);
-            var friendDto = _mapper.Map<UserDto>(friend);
-            userDto.UserProfile.UserTheirFriend.Add(wantedFriendId, false);
-            friendDto.UserProfile.ThisUserFriends.Add(wantedFriendId, false);
-            await _db.Users.UpdateAsync(_mapper.Map<User>(userDto));
-            await _db.Users.UpdateAsync(_mapper.Map<User>(friendDto));
-            await _db.SaveAsync();
         }
 
         public async Task UpdateUserInfoAsync(UserDto user)
@@ -377,17 +302,17 @@ namespace NetworkBLL.Services
                 throw new NetworkException("Users parameters and password cannot contain empty spaces");
             }
             var existWithEmailUser = await _db.Users.GetByEmailAsync(user.Email);
-            if (existWithEmailUser != null)
+            if (existWithEmailUser != null && user.Id != existWithEmailUser.Id)
             {
                 throw new NetworkException("This email is already occupied");
             }
             var existWithPhoneUser = await _db.Users.GetByPhoneNumberAsync(user.PhoneNumber);
-            if (existWithPhoneUser != null)
+            if (existWithPhoneUser != null && user.Id != existWithEmailUser.Id)
             {
                 throw new NetworkException("This phone number is already occupied");
             }
             var existWithUsername = _db.Users.GetAll().FirstOrDefault(user => user.UserName == user.UserName);
-            if (existWithUsername != null)
+            if (existWithUsername != null && user.Id != existWithEmailUser.Id)
             {
                 throw new NetworkException("This username is already occupied");
             }

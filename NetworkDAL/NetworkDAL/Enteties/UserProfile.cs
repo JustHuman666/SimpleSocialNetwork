@@ -31,6 +31,12 @@ namespace NetworkDAL.Enteties
 
         public virtual ICollection<Message> Messages { get; set; }
 
-        
+        public UserProfile()
+        {
+            UserIsFriend ??= new HashSet<UserFriends>();
+            ThisUserFriends ??= new HashSet<UserFriends>();
+            Chats ??= new HashSet<UserChat>();
+            Messages ??= new HashSet<Message>();
+        }
     }
 }

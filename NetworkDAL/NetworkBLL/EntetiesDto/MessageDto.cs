@@ -21,5 +21,7 @@ namespace NetworkBLL.EntetiesDto
 
         public bool Status { get; set; }
 
+        public string OriginalSenderUserName { get; set; }
+
     }
 }

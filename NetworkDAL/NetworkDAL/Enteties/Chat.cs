@@ -29,5 +29,10 @@ namespace NetworkDAL.Enteties
         /// </summary>
         public virtual ICollection<Message> Messages { get; set; }
 
+        public Chat()
+        {
+            Users ??= new HashSet<UserChat>();
+            Messages ??= new HashSet<Message>();
+        }
     }
 }

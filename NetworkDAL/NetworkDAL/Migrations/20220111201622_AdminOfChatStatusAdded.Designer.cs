@@ -10,8 +10,8 @@ using NetworkDAL.Context;
 namespace NetworkDAL.Migrations
 {
     [DbContext(typeof(NetworkContext))]
-    [Migration("20220106143712_NewUserAddedToContext")]
-    partial class NewUserAddedToContext
+    [Migration("20220111201622_AdminOfChatStatusAdded")]
+    partial class AdminOfChatStatusAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -167,14 +167,17 @@ namespace NetworkDAL.Migrations
                     b.Property<int>("ChatId")
                         .HasColumnType("int");
 
+                    b.Property<string>("OriginalSenderUserName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SenderId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("SendingTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("StatusId")
-                        .HasColumnType("int");
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -186,46 +189,7 @@ namespace NetworkDAL.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.HasIndex("StatusId");
-
                     b.ToTable("Messages");
-                });
-
-            modelBuilder.Entity("NetworkDAL.Enteties.MessageStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("StatusName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MessageStatuses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            StatusName = "Sent"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            StatusName = "Seen"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            StatusName = "OnWay"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            StatusName = "Error"
-                        });
                 });
 
             modelBuilder.Entity("NetworkDAL.Enteties.Role", b =>
@@ -260,14 +224,14 @@ namespace NetworkDAL.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "8977e5f2-74ba-4a3b-883a-fb7fd05b8272",
+                            ConcurrencyStamp = "3d2212a4-2f9b-4a9c-a780-15f5fbb2b569",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "cbc63fba-2646-4d20-916a-a67107421c55",
+                            ConcurrencyStamp = "d0b67312-441a-4fba-a388-0c86596dc428",
                             Name = "Registered",
                             NormalizedName = "REGISTERED"
                         });
@@ -344,13 +308,13 @@ namespace NetworkDAL.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d1643bb6-4eb4-45a5-b1a3-c1cff6ecf82c",
+                            ConcurrencyStamp = "bf7de1e1-758a-42c2-8d4a-69e6c089d572",
                             Email = "e.myhalchuk@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "E.MYHALCHUK@GMAIL.COM",
                             NormalizedUserName = "ADMINELYA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPfWSwtRdC8FSXhL2LNtSClXQTL1udwcXp95oy6t+gHxXnUi+8a1SUJXjS77eIbvLQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEF4Y51ERLmSxEJ9IZmrFbtZWhozGgFQcYATWNRyDlh5fCsb4PKsPP/jzw9fiThy8Cg==",
                             PhoneNumber = "+380671234567",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
@@ -360,13 +324,13 @@ namespace NetworkDAL.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d32d077f-847d-4a67-957a-47feb70927f0",
+                            ConcurrencyStamp = "c2df89de-a3c4-48b6-9afd-dd9bef369b47",
                             Email = "default@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "DEFAULT@GMAIL.COM",
                             NormalizedUserName = "DEFAULT",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBWIMOm3zlcOJzKkaDoMk7co6dqnzr1Detr2yZtI1E3pb+tFueP2Dq6ovrvIP3K8ew==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELdBdmiPkTOJrlkJU25IIawhaRzWkWBm0/YVpPRtii1kfePjPQTpVAH62FeOYSFVnA==",
                             PhoneNumber = "+380000000000",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
@@ -376,32 +340,26 @@ namespace NetworkDAL.Migrations
 
             modelBuilder.Entity("NetworkDAL.Enteties.UserChat", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ChatId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<bool>("isAdmin")
+                        .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId", "ChatId");
 
                     b.HasIndex("ChatId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("UsersChats");
                 });
 
             modelBuilder.Entity("NetworkDAL.Enteties.UserFriends", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("FriendId")
                         .HasColumnType("int");
@@ -409,14 +367,9 @@ namespace NetworkDAL.Migrations
                     b.Property<bool>("IsConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("UserId", "FriendId");
 
                     b.HasIndex("FriendId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("UsersFriends");
                 });
@@ -425,9 +378,6 @@ namespace NetworkDAL.Migrations
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -447,14 +397,12 @@ namespace NetworkDAL.Migrations
                         new
                         {
                             Id = 1,
-                            Country = "Ukraine",
                             FirstName = "Eleonora",
                             LastName = "Mykhalchuk"
                         },
                         new
                         {
                             Id = 2,
-                            Country = "Ukraine",
                             FirstName = "DefaultName",
                             LastName = "DefaultLast"
                         });
@@ -524,12 +472,6 @@ namespace NetworkDAL.Migrations
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("NetworkDAL.Enteties.MessageStatus", "Status")
-                        .WithMany("Messages")
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("NetworkDAL.Enteties.UserChat", b =>
@@ -537,13 +479,13 @@ namespace NetworkDAL.Migrations
                     b.HasOne("NetworkDAL.Enteties.Chat", "Chat")
                         .WithMany("Users")
                         .HasForeignKey("ChatId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("NetworkDAL.Enteties.UserProfile", "User")
                         .WithMany("Chats")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -551,11 +493,15 @@ namespace NetworkDAL.Migrations
                 {
                     b.HasOne("NetworkDAL.Enteties.UserProfile", "Friend")
                         .WithMany("UserIsFriend")
-                        .HasForeignKey("FriendId");
+                        .HasForeignKey("FriendId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("NetworkDAL.Enteties.UserProfile", "User")
                         .WithMany("ThisUserFriends")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("NetworkDAL.Enteties.UserProfile", b =>

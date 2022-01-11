@@ -57,13 +57,23 @@ namespace NetworkDAL.Repositories
 
         public IQueryable<User> GetAll()
         {
-            return _userManager.Users.AsQueryable();
+            var users = _userManager.Users.AsQueryable();
+            return users;
         }
 
 
         public async Task<IEnumerable<string>> GetAllUserRoles(User item)
         {
             return await _userManager.GetRolesAsync(item);
+        }
+
+        public IQueryable<User> GetAllWithDetails()
+        {
+            var users = _userManager.Users
+                .Include(x => x.UserProfile)
+                .ThenInclude(x => x.ThisUserFriends)
+                .AsQueryable();
+            return users;
         }
 
         public async Task<User> GetByEmailAsync(string email)
@@ -78,7 +88,10 @@ namespace NetworkDAL.Repositories
 
         public async Task<User> GetByIdWithDetailsAsync(int id)
         {
-            return await _userManager.Users.Include(user => user.UserProfile).FirstOrDefaultAsync(user => user.Id == id);
+            return await _userManager.Users
+                .Include(user => user.UserProfile).ThenInclude(x => x.ThisUserFriends)
+                .Include(user => user.UserProfile).ThenInclude(x => x.UserIsFriend)
+                .FirstOrDefaultAsync(user => user.Id == id);
         }
 
         public async Task<User> GetByPhoneNumberAsync(string phoneNumber)

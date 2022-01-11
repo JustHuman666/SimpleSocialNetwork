@@ -22,8 +22,9 @@ namespace NetworkBLL.Interfaces
         /// To resend message from one chat to another as new, but with original sender info
         /// </summary>
         /// <param name="messageId">The id of message that should be resent</param>
-        /// <param name="chatId">The id of where this message should be resent</param>
-        Task ResendMessageToChosenChatAsync(int messageId, int chatId);
+        /// <param name="chatId">The id of chat where this message should be resent</param>
+        /// <param name="senderId">The id of user who want to resend this message</param>
+        Task ResendMessageToChosenChatAsync(int messageId, int chatId, int senderId);
 
         /// <summary>
         /// To edit a text of chosen message
@@ -42,7 +43,7 @@ namespace NetworkBLL.Interfaces
         /// To delete chosen message for all users in the chat
         /// </summary>
         /// <param name="id">Id of message that should be deleted</param>
-        Task DeleteMessageForAllUsersAsync(int id);
+        Task DeleteMessageAsync(int id);
 
         /// <summary>
         /// To get an instance of message by its id
@@ -55,13 +56,13 @@ namespace NetworkBLL.Interfaces
         /// To get a collection of all messages
         /// </summary>
         /// <returns>Queryable collection of messages</returns>
-        Task<IQueryable<MessageDto>> GetAllMessagesAsync();
+        Task<IEnumerable<MessageDto>> GetAllMessagesAsync();
 
         /// <summary>
         /// To get a collection of all messages in chosen chat
         /// </summary>
         /// <param name="id">The id of chat whish messages are finding</param>
-        /// <returns>Queryable collection of message/returns>
-        Task<IQueryable<MessageDto>> GetAllMessagesByChatIdAsync(int id);
+        /// <returns>Collection of message/returns>
+        Task<IEnumerable<MessageDto>> GetAllMessagesByChatIdAsync(int id);
     }
 }

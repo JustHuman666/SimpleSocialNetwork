@@ -32,7 +32,7 @@ namespace NetworkBLL.Services
             _mapper = mapper;
         }
 
-        public async Task DeleteMessageForAllUsersAsync(int id)
+        public async Task DeleteMessageAsync(int id)
         {
             var message = await _db.Messages.GetByIdAsync(id);
             if(message == null)
@@ -59,7 +59,7 @@ namespace NetworkBLL.Services
             {
                 throw new NotFoundException("User does not exist");
             }
-            if(message.SenderId != senderId)
+            if(message.OriginalSenderUserName != user.UserName)
             {
                 throw new NetworkException("This user is not the sender of this message, he cannot edit it");
             }
@@ -72,17 +72,17 @@ namespace NetworkBLL.Services
             await _db.SaveAsync();
         }
 
-        public async Task<IQueryable<MessageDto>> GetAllMessagesAsync()
+        public async Task<IEnumerable<MessageDto>> GetAllMessagesAsync()
         {
             var messages = await _db.Messages.GetAllAsync();
             if (messages == null || messages.Count() == 0)
             {
                 throw new NotFoundException("There is not any message");
             }
-            return _mapper.Map<IQueryable<MessageDto>>(messages);
+            return _mapper.Map<IEnumerable<MessageDto>>(messages);
         }
 
-        public async Task<IQueryable<MessageDto>> GetAllMessagesByChatIdAsync(int id)
+        public async Task<IEnumerable<MessageDto>> GetAllMessagesByChatIdAsync(int id)
         {
             var allMessages = await _db.Messages.GetAllAsync();
             if (allMessages == null || allMessages.Count() == 0)
@@ -94,7 +94,7 @@ namespace NetworkBLL.Services
             {
                 throw new NotFoundException("There is not any message in this chat");
             }
-            return _mapper.Map<IQueryable<MessageDto>>(chatMessages);
+            return _mapper.Map<IEnumerable<MessageDto>>(chatMessages);
         }
 
         public async Task<MessageDto> GetMessageByIdAsync(int id)
@@ -107,7 +107,7 @@ namespace NetworkBLL.Services
             return _mapper.Map<MessageDto>(message);
         }
 
-        public async Task ResendMessageToChosenChatAsync(int messageId, int chatId)
+        public async Task ResendMessageToChosenChatAsync(int messageId, int chatId, int senderId)
         {
             var message = await _db.Messages.GetByIdAsync(messageId);
             if (message == null)
@@ -119,8 +119,8 @@ namespace NetworkBLL.Services
             {
                 throw new NotFoundException("Chat does not exist");
             }
-            var user = await _db.Users.GetByIdAsync(message.SenderId);
-            if (user == null)
+            var sender = await _db.Users.GetByIdAsync(senderId);
+            if (sender == null)
             {
                 throw new NotFoundException("User does not exist");
             }
@@ -130,12 +130,20 @@ namespace NetworkBLL.Services
             }
             var resentMessage = new MessageDto()
             {
-                SenderId = message.SenderId,
+                SenderId = senderId,
+                OriginalSenderUserName = message.OriginalSenderUserName,
                 ChatId = chatId,
                 SendingTime = DateTime.Now,
-                Text = message.Text, 
                 Status = false
             };
+            if(message.OriginalSenderUserName == sender.UserName)
+            {
+                resentMessage.Text = $"Resent from: {sender.UserName}. " + message.Text;
+            }
+            else
+            {
+                resentMessage.Text = message.Text;
+            }
             await _db.Messages.CreateAsync(_mapper.Map<Message>(resentMessage));
             await _db.SaveAsync();
         }
@@ -166,6 +174,7 @@ namespace NetworkBLL.Services
                 throw new NetworkException("Message text cannot be null or empty");
             }
             item.SendingTime = DateTime.Now;
+            item.OriginalSenderUserName = user.UserName;
             item.Status = false;
             await _db.Messages.CreateAsync(_mapper.Map<Message>(item));
             await _db.SaveAsync();

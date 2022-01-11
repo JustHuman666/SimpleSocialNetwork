@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetworkAPI.Models
 {
-    public class UserModel
+    public class RegisterModel
     {
         [Required]
         [StringLength(30, ErrorMessage = "First name should consits of from {2} to {0} characters", MinimumLength = 2)]
@@ -28,5 +28,10 @@ namespace NetworkAPI.Models
         [Phone]
         public string PhoneNumber { get; set; }
 
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        [StringLength(50, ErrorMessage = "Password should consits of from {2} to {0} characters", MinimumLength = 8)]
+        public string Password { get; set; }
     }
 }

@@ -5,7 +5,10 @@ using System.Text;
 
 namespace NetworkDAL.Enteties
 {
-    public class UserFriends : BaseEntity
+    /// <summary>
+    /// Class for representing of friendship
+    /// </summary>
+    public class UserFriends
     {
         public virtual UserProfile User { get; set; }
         [ForeignKey("User")]

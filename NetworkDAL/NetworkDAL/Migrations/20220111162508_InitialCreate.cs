@@ -63,19 +63,6 @@ namespace NetworkDAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MessageStatuses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StatusName = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MessageStatuses", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -187,8 +174,7 @@ namespace NetworkDAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 30, nullable: false),
-                    LastName = table.Column<string>(maxLength: 30, nullable: false),
-                    Country = table.Column<string>(nullable: true)
+                    LastName = table.Column<string>(maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -211,7 +197,8 @@ namespace NetworkDAL.Migrations
                     SendingTime = table.Column<DateTime>(nullable: false),
                     SenderId = table.Column<int>(nullable: false),
                     ChatId = table.Column<int>(nullable: false),
-                    StatusId = table.Column<int>(nullable: false)
+                    Status = table.Column<bool>(nullable: false),
+                    OriginalSenderUserName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -228,26 +215,18 @@ namespace NetworkDAL.Migrations
                         principalTable: "UserProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Messages_MessageStatuses_StatusId",
-                        column: x => x.StatusId,
-                        principalTable: "MessageStatuses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "UsersChats",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(nullable: false),
                     ChatId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UsersChats", x => x.Id);
+                    table.PrimaryKey("PK_UsersChats", x => new { x.UserId, x.ChatId });
                     table.ForeignKey(
                         name: "FK_UsersChats_Chats_ChatId",
                         column: x => x.ChatId,
@@ -266,26 +245,23 @@ namespace NetworkDAL.Migrations
                 name: "UsersFriends",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(nullable: true),
-                    FriendId = table.Column<int>(nullable: true)
+                    UserId = table.Column<int>(nullable: false),
+                    FriendId = table.Column<int>(nullable: false),
+                    IsConfirmed = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UsersFriends", x => x.Id);
+                    table.PrimaryKey("PK_UsersFriends", x => new { x.UserId, x.FriendId });
                     table.ForeignKey(
                         name: "FK_UsersFriends_UserProfiles_FriendId",
                         column: x => x.FriendId,
                         principalTable: "UserProfiles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_UsersFriends_UserProfiles_UserId",
                         column: x => x.UserId,
                         principalTable: "UserProfiles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
@@ -293,35 +269,37 @@ namespace NetworkDAL.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "b5c72c2a-738a-415d-a864-125d30a0847a", "Admin", "ADMIN" },
-                    { 2, "bef425e2-0a3a-47ea-9f50-59bff3c052dd", "Registered", "REGISTERED" }
+                    { 1, "eb92742a-307b-4f58-bc24-5c4fab1a1c20", "Admin", "ADMIN" },
+                    { 2, "0a14ed22-ab6a-4c17-bc09-f0f1d4f36cab", "Registered", "REGISTERED" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, "b4a7fea8-80d1-4718-a830-d8ce95051ab3", "e.myhalchuk@gmail.com", false, false, null, "E.MYHALCHUK@GMAIL.COM", "ADMINELYA", "AQAAAAEAACcQAAAAEDwmQXtMxVjcBgfsc9OD/s+65L6OBtQzEPswgqueSZaJ1IE0G3mD5zQ5FWTC7yBeyQ==", "+380671234567", false, null, false, "AdminElya" });
-
-            migrationBuilder.InsertData(
-                table: "MessageStatuses",
-                columns: new[] { "Id", "StatusName" },
                 values: new object[,]
                 {
-                    { 1, "Sent" },
-                    { 2, "Seen" },
-                    { 3, "OnWay" },
-                    { 4, "Error" }
+                    { 1, 0, "1bdbf6a2-a75f-4b4c-a293-d34fc6efac74", "e.myhalchuk@gmail.com", false, false, null, "E.MYHALCHUK@GMAIL.COM", "ADMINELYA", "AQAAAAEAACcQAAAAEMkeEutElIDLCmFNZZappZqE7KOWMCUb8nkI4jOG45xCTqoC5a5tTT8DwPXM7LnO+A==", "+380671234567", false, null, false, "AdminElya" },
+                    { 2, 0, "463b67e1-8e8d-4987-bbb9-ef58cec30e10", "default@gmail.com", false, false, null, "DEFAULT@GMAIL.COM", "DEFAULT", "AQAAAAEAACcQAAAAEMJaR43tSqHWdmV142cNdTdK+HlL+eE0bLhL/zfPFtMv69MluoHU61eRQXHqnZrDKQ==", "+380000000000", false, null, false, "Default" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { 1, 1 });
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 1, 2 },
+                    { 2, 2 }
+                });
 
             migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "UserId", "RoleId" },
-                values: new object[] { 1, 2 });
+                table: "UserProfiles",
+                columns: new[] { "Id", "FirstName", "LastName" },
+                values: new object[,]
+                {
+                    { 1, "Eleonora", "Mykhalchuk" },
+                    { 2, "DefaultName", "DefaultLast" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -373,29 +351,14 @@ namespace NetworkDAL.Migrations
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_StatusId",
-                table: "Messages",
-                column: "StatusId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UsersChats_ChatId",
                 table: "UsersChats",
                 column: "ChatId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UsersChats_UserId",
-                table: "UsersChats",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UsersFriends_FriendId",
                 table: "UsersFriends",
                 column: "FriendId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UsersFriends_UserId",
-                table: "UsersFriends",
-                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -426,9 +389,6 @@ namespace NetworkDAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "MessageStatuses");
 
             migrationBuilder.DropTable(
                 name: "Chats");

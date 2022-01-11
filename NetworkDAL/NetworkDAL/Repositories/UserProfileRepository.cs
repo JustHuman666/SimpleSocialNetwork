@@ -25,9 +25,11 @@ namespace NetworkDAL.Repositories
         {
             _context = context;
         }
+
         public async Task<IQueryable<UserProfile>> GetAllWithDetailsAsync()
         {
             var userProfiles = await _context.UserProfiles
+                .Include(user => user.AppUser)
                 .Include(user => user.ThisUserFriends)
                 .Include(user => user.UserIsFriend)
                 .Include(user => user.Messages)
@@ -43,6 +45,7 @@ namespace NetworkDAL.Repositories
         public async Task<UserProfile> GetByIdWithDetailsAsync(int id)
         {
             return await _context.UserProfiles
+                .Include(user => user.AppUser)
                 .Include(user => user.ThisUserFriends)
                 .Include(user => user.UserIsFriend)
                 .Include(user => user.Messages)
@@ -84,7 +87,5 @@ namespace NetworkDAL.Repositories
             }
             return friends;
         }
-
-
     }
 }

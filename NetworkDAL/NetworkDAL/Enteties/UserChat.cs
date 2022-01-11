@@ -5,7 +5,10 @@ using System.Text;
 
 namespace NetworkDAL.Enteties
 {
-    public class UserChat : BaseEntity
+    /// <summary>
+    /// Class for representing of users chats relationships
+    /// </summary>
+    public class UserChat
     {
         public virtual UserProfile User { get; set; }
         [ForeignKey("UserId")]
@@ -14,6 +17,8 @@ namespace NetworkDAL.Enteties
         public virtual Chat Chat { get; set; }
         [ForeignKey("ChatId")]
         public int ChatId { get; set; }
+
+        public bool isAdmin { get; set; }
 
     }
 }

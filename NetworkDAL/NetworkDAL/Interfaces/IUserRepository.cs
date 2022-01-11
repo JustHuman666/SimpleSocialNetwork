@@ -98,5 +98,11 @@ namespace NetworkDAL.Interfaces
         /// <param name="id">The id of user that is found</param>
         /// <returns>An instance of found user</returns>
         Task<User> GetByIdWithDetailsAsync(int id);
+
+        /// <summary>
+        /// To get a collection of users with additional information from DB
+        /// </summary>
+        /// <returns>Collection of found users with all details</returns>
+        IQueryable<User> GetAllWithDetails();
     }
 }

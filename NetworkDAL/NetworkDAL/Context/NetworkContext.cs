@@ -21,19 +21,19 @@ namespace NetworkDAL.Context
         {
         }
 
-        public NetworkContext(DbContextOptions options) : base(options)
-        {
-        }
+        //public NetworkContext(DbContextOptions options) : base(options)
+        //{
+        //}
 
-        public NetworkContext() : base()
-        {
-        }
+        //public NetworkContext() : base()
+        //{
+        //}
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server = localhost, 1433; Database = SocialNetwork; User ID = sa; Password = <password12345>")
-                .EnableSensitiveDataLogging();
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(@"Server = localhost, 1433; Database = SocialNetwork; User ID = sa; Password = <password12345>")
+        //        .EnableSensitiveDataLogging();
+        //}
 
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
@@ -83,8 +83,8 @@ namespace NetworkDAL.Context
             };
 
             var passwordHasher = new PasswordHasher<User>();
-            adminData.PasswordHash = passwordHasher.HashPassword(adminData, "AdminPassword");
-            defaultUser.PasswordHash = passwordHasher.HashPassword(defaultUser, "DefaultPassword");
+            adminData.PasswordHash = passwordHasher.HashPassword(adminData, "AdminPassword_1");
+            defaultUser.PasswordHash = passwordHasher.HashPassword(defaultUser, "DefaultPassword_2");
 
             builder.Entity<User>().HasData(adminData, defaultUser);
             builder.Entity<UserProfile>().HasData(adminProfile, defaultProfile);
@@ -97,8 +97,12 @@ namespace NetworkDAL.Context
             builder.Entity<UserProfile>().HasMany(x => x.Chats).WithOne(x => x.User).HasForeignKey(x => x.UserId);
             builder.Entity<Chat>().HasMany(x => x.Users).WithOne(x => x.Chat).HasForeignKey(x => x.ChatId);
             builder.Entity<UserProfile>().HasOne(x => x.AppUser).WithOne(x => x.UserProfile).HasForeignKey<UserProfile>(x => x.Id);
-            builder.Entity<UserFriends>().HasOne(x => x.User).WithMany(x => x.ThisUserFriends).HasForeignKey(x => x.UserId); 
-            builder.Entity<UserFriends>().HasOne(x => x.Friend).WithMany(x => x.UserIsFriend).HasForeignKey(x => x.FriendId);
+            builder.Entity<UserFriends>().HasKey(x => new { x.UserId, x.FriendId});
+            builder.Entity<UserFriends>().HasOne(x => x.User).WithMany(x => x.ThisUserFriends).OnDelete(DeleteBehavior.NoAction).HasForeignKey(x => x.UserId); 
+            builder.Entity<UserFriends>().HasOne(x => x.Friend).WithMany(x => x.UserIsFriend).OnDelete(DeleteBehavior.NoAction).HasForeignKey(x => x.FriendId);
+            builder.Entity<UserChat>().HasKey(x => new { x.UserId, x.ChatId });
+            builder.Entity<UserChat>().HasOne(x => x.User).WithMany(x => x.Chats).OnDelete(DeleteBehavior.Cascade).HasForeignKey(x => x.UserId);
+            builder.Entity<UserChat>().HasOne(x => x.Chat).WithMany(x => x.Users).OnDelete(DeleteBehavior.Cascade).HasForeignKey(x => x.ChatId);
 
 
         }

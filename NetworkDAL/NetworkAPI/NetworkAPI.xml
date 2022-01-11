@@ -1,0 +1,363 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NetworkAPI</name>
+    </assembly>
+    <members>
+        <member name="T:NetworkAPI.AutoMapper.AutoMapperPL">
+            <summary>
+            Auto mapper profile for all dtos and models
+            </summary>
+        </member>
+        <member name="T:NetworkAPI.Controllers.AuthentificationController">
+            <summary>
+            Controller for authentification processes
+            </summary>
+        </member>
+        <member name="M:NetworkAPI.Controllers.AuthentificationController.#ctor(NetworkBLL.Interfaces.IAuthentificationService,NetworkBLL.Interfaces.IUserService,AutoMapper.IMapper)">
+            <summary>
+            Constructor for creating of controller with given services and mapper profile
+            </summary>
+            <param name="mapper">Auto mapper profile for models and dtos</param>
+            <param name="authService">Authentification service</param>
+            <param name="userService">User service</param>
+        </member>
+        <member name="M:NetworkAPI.Controllers.AuthentificationController.RegisterUSer(NetworkAPI.Models.RegisterModel)">
+            <summary>
+            The registration of new user
+            </summary>
+            <param name="registerModel">Model of registered user</param>
+            <returns>Instance of object result of creating user</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.AuthentificationController.Login(NetworkAPI.Models.LoginModel)">
+            <summary>
+            To log user in network
+            </summary>
+            <param name="loginModel">Instance of data for logging in</param>
+            <returns>Result status code</returns>
+        </member>
+        <member name="T:NetworkAPI.Controllers.ChatController">
+            <summary>
+            Controller for working with chats
+            </summary>
+        </member>
+        <member name="M:NetworkAPI.Controllers.ChatController.#ctor(NetworkBLL.Interfaces.IChatService,NetworkBLL.Interfaces.IUserProfileService,AutoMapper.IMapper)">
+            <summary>
+            Constructor for creating of controller with given services and mapper profile
+            </summary>
+            <param name="mapper">Auto mapper profile for models and dtos</param>
+            <param name="chatService">Chat service</param>
+            <param name="userProfileService">USer profile service</param>
+        </member>
+        <member name="M:NetworkAPI.Controllers.ChatController.CreateNewChatForUser(NetworkAPI.Models.ChatModel)">
+            <summary>
+            To create user chat with at least one user
+            </summary>
+            <param name="chatModel">Model of chat for creating with needed data</param>
+        </member>
+        <member name="M:NetworkAPI.Controllers.ChatController.GetAllUsersChat">
+            <summary>
+            To get all chats of authorized user
+            </summary>
+            <returns>Collection of all chats of this user</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.ChatController.GetAllUsersInChat(System.Int32)">
+            <summary>
+            To get all users of chosen chat
+            </summary>
+            <param name="id">Id of chat which users are finding</param>
+            <returns>Collection of all users profiles in this chat</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.ChatController.RenameChat(System.Int32,System.String)">
+            <summary>
+            To rename chat by its id 
+            </summary>
+            <param name="id">The id of chat which name should be changed</param>
+            <param name="name">The new name for chosen chat</param>
+        </member>
+        <member name="M:NetworkAPI.Controllers.ChatController.AddUserInChat(System.Int32,System.Int32)">
+            <summary>
+            To add new user in a chat
+            </summary>
+            <param name="chatId">The id of chat where user should be added</param>
+            <param name="userId">The id of user who should be added</param>
+        </member>
+        <member name="M:NetworkAPI.Controllers.ChatController.DeleteUserFromChat(System.Int32,System.Int32)">
+            <summary>
+            To delete chosen user from a chat
+            </summary>
+            <param name="chatId">The id of chat where user should be deleted</param>
+            <param name="userId">The id of user who should be deleted</param>
+        </member>
+        <member name="M:NetworkAPI.Controllers.ChatController.ClearChatHistoryById(System.Int32)">
+            <summary>
+            To clear a history of messages of chosen chat
+            /// </summary>
+            <param name="id">The id of chat which history should be cleared</param>
+        </member>
+        <member name="M:NetworkAPI.Controllers.ChatController.DeleteChat(System.Int32)">
+            <summary>
+            To delete chosen chat by its unique id
+            </summary>
+            <param name="id">Id of chat that should be deleted</param>
+        </member>
+        <member name="M:NetworkAPI.Controllers.ChatController.GetChatById(System.Int32)">
+            <summary>
+            To get chat with details by its id
+            </summary>
+            <param name="id">Id of chat that should be returned with details</param>
+            <returns>Instance of chat with details</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.ChatController.SetAdminStatusToUser(System.Int32,System.Int32)">
+            <summary>
+            To change the status of chosen user in chosen chat for admin
+            </summary>
+            <param name="userId">The id of user who should be an admin</param>
+            <param name="chatId">The id of chat where chosen user wanted to be admin</param>
+        </member>
+        <member name="M:NetworkAPI.Controllers.ChatController.SetDefaultStatusToUser(System.Int32,System.Int32)">
+            <summary>
+            To change the status of chosen user in chosen chat for default
+            </summary>
+            <param name="userId">The id of chat that is finding</param>
+            <param name="chatId">The id of chat where chosen user wanted to be admin</param>
+        </member>
+        <member name="T:NetworkAPI.Controllers.ErrorController">
+            <summary>
+            Controller for error handling
+            </summary>
+        </member>
+        <member name="T:NetworkAPI.Controllers.FriendController">
+            <summary>
+            Controller for working for friends of user etc
+            </summary>
+        </member>
+        <member name="M:NetworkAPI.Controllers.FriendController.#ctor(NetworkBLL.Interfaces.IUserProfileService,AutoMapper.IMapper)">
+            <summary>
+            Constructor for creating of controller with given services and mapper profile
+            </summary>
+            <param name="mapper">Auto mapper profile for models and dtos</param>
+            <param name="userProfileService">User profile service</param>
+        </member>
+        <member name="M:NetworkAPI.Controllers.FriendController.GetUserFriendsById(System.Int32)">
+            <summary>
+            To get user friends by its id allowed for all registered users
+            </summary>
+            <param name="id">The id of user whose friends should be found</param>
+            <returns>Found user collection of friends</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.FriendController.GetUserOwnFriendsById">
+            <summary>
+            To get own user friends by himself
+            </summary>
+            <returns>Found user collection of friends</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.FriendController.GetUserOwnInvitationsById">
+            <summary>
+            To get own user invitations to be friends
+            </summary>
+            <returns>Found user collection of invitations</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.FriendController.GetInvitationsByUserById">
+            <summary>
+            To get invitations sent by this user
+            </summary>
+            <returns>Found user collection of invitations</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.FriendController.ConfirmFriendshipWithUser(System.Int32)">
+            <summary>
+            To confirm friendship with chosen user
+            </summary>
+            <param name="friendId">The id of user whose invitation to be a friend should be confirmed</param>
+            <returns>Result status code</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.FriendController.DeleteUserFromFriends(System.Int32)">
+            <summary>
+            To stop friendship with chosen user
+            </summary>
+            <param name="friendId">The id of user who should be deleted from user friends</param>
+            <returns>Result status code</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.FriendController.SendInvitationForFriendship(System.Int32)">
+            <summary>
+            To send an invitation to be friends to a chosen user 
+            </summary>
+            <param name="friendId">The id of user who is wanted to de a friend with sender</param>
+            <returns>Result status code</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.MessageController.#ctor(NetworkBLL.Interfaces.IMessageService,NetworkBLL.Interfaces.IUserProfileService,AutoMapper.IMapper)">
+            <summary>
+            Constructor for creating of controller with given services and mapper profile
+            </summary>
+            <param name="mapper">Auto mapper profile for models and dtos</param>
+            <param name="messageService">Chat service</param>
+            <param name="userProfileService">USer profile service</param>
+        </member>
+        <member name="M:NetworkAPI.Controllers.MessageController.SendMessageInChat(NetworkAPI.Models.MessageModel)">
+            <summary>
+            To send a new message in chat
+            </summary>
+            <param name="messageModel">The instance of new message that should be sent</param>
+        </member>
+        <member name="M:NetworkAPI.Controllers.MessageController.ResendSendMessageToChat(System.Int32,System.Int32)">
+            <summary>
+            To resend message from one chat to another as new, but with original sender info
+            </summary>
+            <param name="messageId">The id of message that should be resent</param>
+            <param name="chatId">The id of chat where this message should be resent</param>
+        </member>
+        <member name="M:NetworkAPI.Controllers.MessageController.EditMessageText(System.Int32,NetworkAPI.Models.MessageModel)">
+            <summary>
+            To edit a text of chosen message
+            </summary>
+            <param name="messageModel">The instance of message that should be changed</param>
+            <param name="messageId">The id of sender who can edit this message</param>
+        </member>
+        <member name="M:NetworkAPI.Controllers.MessageController.UpdateMessageStatus(System.Int32)">
+            <summary>
+            To update a status of chosen message
+            </summary>
+            <param name="messageId">The id of message which status should be changed</param>
+        </member>
+        <member name="M:NetworkAPI.Controllers.MessageController.DeleteMessage(System.Int32)">
+            <summary>
+            To delete chosen message for all users in the chat
+            </summary>
+            <param name="id">Id of message that should be deleted</param>
+        </member>
+        <member name="M:NetworkAPI.Controllers.MessageController.GetMessageById(System.Int32)">
+            <summary>
+            To get an instance of message by its id
+            </summary>
+            <param name="id">Id of message that is found</param>
+            <returns>An instance of found message</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.MessageController.GetAllMessages">
+            <summary>
+            To get a collection of all messages
+            </summary>
+            <returns>Collection of messages</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.MessageController.GetMessagesOfChat(System.Int32)">
+            <summary>
+            To get a collection of all messages
+            </summary>
+            <returns>Collection of messages</returns>
+        </member>
+        <member name="T:NetworkAPI.Controllers.UserController">
+            <summary>
+            Controller for working with users
+            </summary>
+        </member>
+        <member name="M:NetworkAPI.Controllers.UserController.#ctor(NetworkBLL.Interfaces.IUserService,NetworkBLL.Interfaces.IUserProfileService,AutoMapper.IMapper)">
+            <summary>
+            Constructor for creating of user controller with given services and mapper profile
+            </summary>
+            <param name="mapper">Auto mapper profile for models and dtos</param>
+            <param name="userService">User service</param>
+            <param name="userProfileService">User profile service</param>
+        </member>
+        <member name="M:NetworkAPI.Controllers.UserController.GetAllUserProfilesWithDetails">
+            <summary>
+            To get all users profiles with details
+            </summary>
+            <returns>Collection of users profiles</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.UserController.GetUserProfileByIdForAll(System.Int32)">
+            <summary>
+            To get user profile by its id allowed for all users
+            </summary>
+            <param name="id">The id of user whose detailed profile should be found</param>
+            <returns>Found user profile</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.UserController.GetUserRoles">
+            <summary>
+            To get all user roles
+            </summary>
+            <returns>Collection of role names</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.UserController.GetAuthorizedUserProfile">
+            <summary>
+            To get own user profile after autorirization
+            </summary>
+            <returns>User profile of authorized user</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.UserController.ChangeUserPassword(NetworkAPI.Models.ChangePasswordModel)">
+            <summary>
+            To change your own password
+            </summary>
+            <param name="passwordModel">The instance with data for changing password</param>
+            <returns>Successfull status code if all is Ok</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.UserController.GetUserProfileWithDetailsByEmail(System.String)">
+            <summary>
+            To get user profile with all details by his email
+            </summary>
+            <param name="email">The email of user who should be found</param>
+            <returns>Found user</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.UserController.GetUserProfileWithDetailsByUserName(System.String)">
+            <summary>
+            To get user profile with all details by his user name
+            </summary>
+            <param name="name">The user name of user who should be found</param>
+            <returns>Found user</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.UserController.GetUserProfileWithDetailsByFullName(System.String,System.String)">
+            <summary>
+            To get user profile with all details by his full name
+            </summary>
+            <param name="first">The first name of user who should be found</param>
+            <param name="last">The last name of user who should be found</param>
+            <returns>Found user</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.UserController.GetUserProfileWithDetailsByPhone(System.String)">
+            <summary>
+            To get user profile with all details by his phone number
+            </summary>
+            <param name="phoneNumber">The phone number of user who should be found</param>
+            <returns>Found user</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.UserController.AddUserToRole(System.Int32,System.String)">
+            <summary>
+            To add chosen user to chosen role
+            </summary>
+            <param name="id">The id of user who should be added to role</param>
+            <param name="role">The role name where user should be added to</param>
+            <returns>Result status code</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.UserController.UpdateUserInfoByUser(NetworkAPI.Models.UserModel)">
+            <summary>
+            To update user info by this user
+            </summary>
+            <param name="userModel">Changed data of user</param>
+            <returns>Updated user profile</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.UserController.UpdateUserInfoByAdmin(System.Int32,NetworkAPI.Models.UserModel)">
+            <summary>
+            To update user info by admin
+            </summary>
+            <param name="userModel">Changed data of user</param>
+            <param name="id">The id user whose information should changed</param>
+            <returns>Updated user profile</returns>
+        </member>
+        <member name="M:NetworkAPI.Controllers.UserController.DeleteUserByHimself">
+            <summary>
+            To delete user because of his own desire
+            </summary>
+            <returns>Result status code</returns>        
+        </member>
+        <member name="M:NetworkAPI.Controllers.UserController.DeleteUserByAdmin(System.Int32)">
+            <summary>
+            To delete any user by admin
+            </summary>
+            <param name="id">The id of user who should be deleted</param>
+            <returns>Result status code</returns>
+        </member>
+        <member name="T:NetworkAPI.Models.LoginModel">
+            <summary>
+            Model with data for logging in
+            </summary>
+        </member>
+    </members>
+</doc>

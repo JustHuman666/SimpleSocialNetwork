@@ -39,10 +39,15 @@ namespace NetworkDAL.Enteties
         public int ChatId { get; set; }
 
         /// <summary>
-        /// Instance of message status for users, true - if read, false - if only sent
+        /// Message status for users, true - if read, false - if only sent
         /// </summary>
         public virtual bool Status { get; set; }
-        
+
+        /// <summary>
+        /// The user name of original sender of this message
+        /// </summary>
+        public string OriginalSenderUserName { get; set; }
+
 
     }
 }

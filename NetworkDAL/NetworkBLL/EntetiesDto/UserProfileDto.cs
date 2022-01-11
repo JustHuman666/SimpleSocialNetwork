@@ -22,13 +22,9 @@ namespace NetworkBLL.EntetiesDto
 
         public string PhoneNumber { get; set; }
 
-        //public virtual ICollection<int> UserIsFriendIds { get; set; }
+        public virtual ICollection<int> UserIsFriendIds { get; set; }
 
-        //public virtual ICollection<int> ThisUserFriendIds { get; set; }
-
-        public virtual Dictionary<int, bool> UserTheirFriend { get; set; }
-
-        public virtual Dictionary<int, bool> ThisUserFriends { get; set; }
+        public virtual ICollection<int> ThisUserFriendIds { get; set; }
 
         public virtual ICollection<int> ChatIds { get; set; }
 

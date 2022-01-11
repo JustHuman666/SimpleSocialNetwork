@@ -91,7 +91,7 @@ namespace NetworkBLL.Interfaces
         /// </summary>
         /// <param name="userName">Username of user who is found</param>
         /// <returns>An instance of found user</returns>
-        UserDto GetUserByUserNameAsync(string userName);
+        UserDto GetUserByUserName(string userName);
 
         /// <summary>
         /// To get a collection of users by user full name
@@ -99,13 +99,19 @@ namespace NetworkBLL.Interfaces
         /// <param name="firstName">Firstname of user who is found</param>
         /// <param name="lastName">Lastname of user who is found</param>
         /// <returns>Collection of found users</returns>
-        IQueryable<UserDto> GetUsersByFirstAndLastName(string firstName, string lastName);
+        IEnumerable<UserDto> GetUsersByFirstAndLastName(string firstName, string lastName);
 
         /// <summary>
         /// To get a collection of all users 
         /// </summary>
         /// <returns>Queryable collection of users</returns>
-        IQueryable<UserDto> GetAllUsers();
+        IEnumerable<UserDto> GetAllUsers();
+
+        /// <summary>
+        /// To get a collection of all users 
+        /// </summary>
+        /// <returns>Queryable collection of users</returns>
+        IEnumerable<UserDto> GetAllUsersWithDetails();
 
         /// <summary>
         /// To get an instance of user with additional information 
@@ -114,25 +120,6 @@ namespace NetworkBLL.Interfaces
         /// <returns>An instance of found user</returns>
         Task<UserDto> GetUserByIdWithDetailsAsync(int id);
 
-        /// <summary>
-        /// To send an invitation to be a friend of chosen user
-        /// </summary>
-        /// <param name="userId">The id of user who want to ba e friend</param>
-        /// <param name="wantedFriendId">The id of user who is wanted to be a friend</param>
-        Task SendInvitationForFriendshipAsync(int userId, int wantedFriendId);
-
-        /// <summary>
-        /// To confirm friendship between users
-        /// </summary>
-        /// <param name="userId">The id of user who get the invitation</param>
-        /// <param name="friendId">The id user who wait for confirm</param>
-        Task ConfirmFriendsip(int userId, int friendToConfirmId);
-
-        /// <summary>
-        /// To delete user from friends
-        /// </summary>
-        /// <param name="userId">The id of user who want to delete this friend</param>
-        /// <param name="friendToDeleteId">The id of friend who should be deleted</param>
-        Task DeleteFriendByFriendId(int userId, int friendToDeleteId);
+        
     }
 }
