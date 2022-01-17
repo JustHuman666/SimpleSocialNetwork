@@ -81,7 +81,7 @@ namespace NetworkAPI.Controllers
         /// </summary>
         /// <returns>User profile of authorized user</returns>
         [HttpGet]
-        [Route("YourProfile")]
+        [Route("MyProfile")]
         [Authorize(Roles = "Registered")]
         public async Task<ActionResult<UserProfileDto>> GetAuthorizedUserProfile()
         {
@@ -192,7 +192,7 @@ namespace NetworkAPI.Controllers
         /// <param name="userModel">Changed data of user</param>
         /// <returns>Updated user profile</returns>
         [HttpPut]
-        [Route("UpdateYourInfo")]
+        [Route("UpdateMyInfo")]
         [Authorize(Roles = "Registered")]
         public async Task<ActionResult<UserProfileDto>> UpdateUserInfoByUser([FromBody] UserModel userModel)
         {
@@ -210,7 +210,7 @@ namespace NetworkAPI.Controllers
         /// <param name="id">The id user whose information should changed</param>
         /// <returns>Updated user profile</returns>
         [HttpPut]
-        [Route("UpdateUserInfo")]
+        [Route("UpdateUserInfo/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<UserProfileModel>> UpdateUserInfoByAdmin(int id, [FromBody] UserModel userModel)
         {

@@ -16,10 +16,10 @@
     width: auto;
     height: 60px;
     display: flex;
-    justify-content: center;
+    vertical-align: middle;
 }
 #menu-button mat-icon{
-    height: 100%;
-    width: auto;
+    height: 10px;
+    width: 100%;
     font-size: 60px;
 }

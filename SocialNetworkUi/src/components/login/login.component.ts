@@ -10,10 +10,10 @@ import { AuthService } from 'src/services/auth-service/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {
+  }
   
   loginForm!: FormGroup;
-
   loginError!: string;
   
   ngOnInit() {
@@ -23,5 +23,13 @@ export class LoginComponent implements OnInit {
       password: new FormControl()
     });
   }
-  login(){}
+  
+  login(){
+    this.authService.logIn(this.loginForm.controls['email'].value, this.loginForm.controls['password'].value)
+      .subscribe(() => {
+        this.router.navigate([''])
+      }, () => {
+        this.loginError = "Incorrect password or email, try again!";
+      });
+  }
 }

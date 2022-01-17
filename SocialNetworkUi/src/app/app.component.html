@@ -1,9 +1,17 @@
 <mat-toolbar id="mat-toolbar-main">
   <div id="menu-elements">
     <span class="mat-display-3">Get All</span>
-    <button mat-button id="menu-button">
+    <button mat-icon-button [matMenuTriggerFor]="menu" id="menu-button">
       <mat-icon>menu</mat-icon>
     </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/login" *ngIf="!isLoggedIn">Log in</button>
+      <button mat-menu-item routerLink="" *ngIf="!isLoggedIn">Register</button>
+      <button mat-menu-item routerLink="" *ngIf="isLoggedIn">My profile</button>
+      <button mat-menu-item routerLink="" *ngIf="isLoggedIn">Friends</button>
+      <button mat-menu-item *ngIf="isLoggedIn" (click)="logOut()">Log out</button>
+    </mat-menu>
   </div>
 </mat-toolbar>
 <router-outlet></router-outlet>
+

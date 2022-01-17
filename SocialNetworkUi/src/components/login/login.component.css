@@ -1,0 +1,30 @@
+#home-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #3C6E71;
+    color: white;
+    width: 100%;
+    height: calc(100vh - 60px);
+}
+
+#login-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 50%;
+    height: 50%;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick, .mat-error{
+    color: #590d22;
+}
+
+mat-raised-button{
+    color: white;
+    background-color: #353535;
+}
+#form-field{
+    color: #590d22;
+}

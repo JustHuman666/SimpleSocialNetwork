@@ -1,0 +1,26 @@
+<div id="home-container">
+    <div id="welcome-card" *ngIf="!isLoggedIn">
+        <h1>Welcome</h1>
+        <div id="line"></div>
+        <h2>"Get All" is a simple social network, that gives you an opportunity to be closer to your friends and family, 
+            to make new friends and to find a lot of interesting people around you. 
+            Here you can create and use chats with different amount of users, make "friends" with other users, 
+            find another accounts by some cryteries.
+            <br>If you want to try this network, you can register just now, or if you already have an account, please, log in.
+            <br>We are glad to anyone here, enjoy your time with us!
+        </h2>
+        <div id="possible-operations">
+            <button mat-button matTooltip="You can use chat for 2 and more users" routerLink="/login">
+                <mat-icon id="chat">mail_outline</mat-icon>
+            </button>
+            <button mat-button matTooltip="You can make friends and save 'favourite' users" routerLink="/login">
+                <mat-icon id="friends">people_outline</mat-icon>
+            </button>
+            <button mat-button matTooltip="You can find new people" routerLink="/login">
+                <mat-icon id="searching">search</mat-icon>
+            </button>
+        </div>
+    </div>
+    <app-profile *ngIf="isLoggedIn"></app-profile>
+    
+</div>

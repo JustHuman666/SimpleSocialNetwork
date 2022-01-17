@@ -1,1 +1,30 @@
-<div>Hello</div>
+<div  id="home-container">
+  <h2>Login</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="login()" id="login-form">
+    <mat-error *ngIf="loginError!=''">
+      {{loginError}}
+    </mat-error>
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label color="accent">Write your email</mat-label>
+      <input matInput formControlName="email"
+            type="email"
+            required
+            placeholder="Email">
+            <mat-error>
+              Please, write a valid email
+            </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Write your password</mat-label>
+      <input matInput formControlName="password"
+             type="password"
+             required
+             placeholder="Password">
+             <mat-error>
+              Please, write a valid password
+            </mat-error>
+      </mat-form-field>
+      <button mat-raised-button [disabled]="!loginForm.valid"> Login </button>
+  </form>
+</div>
