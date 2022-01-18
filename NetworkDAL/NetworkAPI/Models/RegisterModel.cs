@@ -9,15 +9,15 @@ namespace NetworkAPI.Models
     public class RegisterModel
     {
         [Required]
-        [StringLength(30, ErrorMessage = "First name should consits of from {2} to {0} characters", MinimumLength = 2)]
+        [StringLength(30, ErrorMessage = "First name should consits of at least {2} characters", MinimumLength = 2)]
         public string FirstName { get; set; }
 
         [Required]
-        [StringLength(30, ErrorMessage = "Last name should consits of from {2} to {0} characters", MinimumLength = 2)]
+        [StringLength(30, ErrorMessage = "Last name should consits of at least {2} characters", MinimumLength = 2)]
         public string LastName { get; set; }
 
         [Required]
-        [StringLength(20, ErrorMessage = "User name should consits of from {2} to {0} characters", MinimumLength = 3)]
+        [StringLength(20, ErrorMessage = "User name should consits of at least {2} characters", MinimumLength = 3)]
         public string UserName { get; set; }
 
         [Required]
@@ -31,7 +31,7 @@ namespace NetworkAPI.Models
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
-        [StringLength(50, ErrorMessage = "Password should consits of from {2} to {0} characters", MinimumLength = 8)]
+        [StringLength(50, ErrorMessage = "Password should consits of at least {2} characters", MinimumLength = 8)]
         public string Password { get; set; }
     }
 }

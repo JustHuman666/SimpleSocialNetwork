@@ -142,13 +142,14 @@ namespace NetworkAPI
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
+            app.UseExceptionHandler("/error");
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseExceptionHandler("/error");
-
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseDefaultFiles();

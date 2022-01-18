@@ -9,7 +9,7 @@ namespace NetworkAPI.Models
     public class ChatModel
     {
         [Required]
-        [StringLength(30, ErrorMessage = "Chat name should consits of from {2} to {0} characters", MinimumLength = 2)]
+        [StringLength(30, ErrorMessage = "Chat name should consits of at least {2} characters", MinimumLength = 2)]
         public string ChatName { get; set; }
 
         [Required]

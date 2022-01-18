@@ -9,15 +9,15 @@ namespace NetworkAPI.Models
     public class UserModel
     {
         [Required]
-        [StringLength(30, ErrorMessage = "First name should consits of from {2} to {0} characters", MinimumLength = 2)]
+        [StringLength(30, ErrorMessage = "First name should consits of at least {2} characters", MinimumLength = 2)]
         public string FirstName { get; set; }
 
         [Required]
-        [StringLength(30, ErrorMessage = "Last name should consits of from {2} to {0} characters", MinimumLength = 2)]
+        [StringLength(30, ErrorMessage = "Last name should consits of at least {2} characters", MinimumLength = 2)]
         public string LastName { get; set; }
 
         [Required]
-        [StringLength(20, ErrorMessage = "User name should consits of from {2} to {0} characters", MinimumLength = 3)]
+        [StringLength(20, ErrorMessage = "User name should consits of at least {2} characters", MinimumLength = 3)]
         public string UserName { get; set; }
 
         [Required]

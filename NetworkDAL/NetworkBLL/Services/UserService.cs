@@ -307,12 +307,12 @@ namespace NetworkBLL.Services
                 throw new NetworkException("This email is already occupied");
             }
             var existWithPhoneUser = await _db.Users.GetByPhoneNumberAsync(user.PhoneNumber);
-            if (existWithPhoneUser != null && user.Id != existWithEmailUser.Id)
+            if (existWithPhoneUser != null && user.Id != existWithPhoneUser.Id)
             {
                 throw new NetworkException("This phone number is already occupied");
             }
-            var existWithUsername = _db.Users.GetAll().FirstOrDefault(user => user.UserName == user.UserName);
-            if (existWithUsername != null && user.Id != existWithEmailUser.Id)
+            var existWithUsername = _db.Users.GetAll().FirstOrDefault(us => us.UserName == user.UserName);
+            if (existWithUsername != null && user.Id != existWithUsername.Id)
             {
                 throw new NetworkException("This username is already occupied");
             }

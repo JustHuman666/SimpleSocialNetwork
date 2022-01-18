@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NetworkAPI.ErrorBuilder;
 using NetworkBLL.Validation;
 
 namespace NetworkAPI.Controllers
@@ -25,15 +26,15 @@ namespace NetworkAPI.Controllers
 
             if (exception is NetworkException)
             {
-                return BadRequest($"{exception.Message}. Status code: {HttpStatusCode.BadRequest}");
+                return BadRequest(new ApiErrorBuilder(exception.Message, HttpStatusCode.BadRequest));
             }
                 
             if (exception is NotFoundException)
             {
-                return NotFound($"{exception.Message}. Status code: {HttpStatusCode.NotFound}");
+                return NotFound(new ApiErrorBuilder(exception.Message, HttpStatusCode.NotFound));
             }
 
-            return StatusCode(500, $"Something went wrog. Status code: {HttpStatusCode.InternalServerError}");
+            return new JsonResult(new ApiErrorBuilder(exception.Message, HttpStatusCode.InternalServerError));
         }
     }
 }

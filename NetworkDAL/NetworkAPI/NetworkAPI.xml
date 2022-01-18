@@ -354,6 +354,18 @@
             <param name="id">The id of user who should be deleted</param>
             <returns>Result status code</returns>
         </member>
+        <member name="T:NetworkAPI.ErrorBuilder.ApiErrorBuilder">
+            <summary>
+            Class for returning errors by api
+            </summary>
+        </member>
+        <member name="M:NetworkAPI.ErrorBuilder.ApiErrorBuilder.#ctor(System.String,System.Net.HttpStatusCode)">
+            <summary>
+            Constructor for creating error object with given parametrs
+            </summary>
+            <param name="message">The message of sent exception</param>
+            <param name="code">The status code of exception</param>
+        </member>
         <member name="T:NetworkAPI.Models.LoginModel">
             <summary>
             Model with data for logging in
