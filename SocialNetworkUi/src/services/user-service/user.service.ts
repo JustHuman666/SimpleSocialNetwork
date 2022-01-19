@@ -16,8 +16,8 @@ export class UserService {
   constructor(private http: HttpClient, 
     @Inject(SOCIAL_NETWORK_API_URL) private apiUrl: string) { }
 
-  getAllUsers():Observable<GetUser>{
-      return this.http.get<GetUser>(`${this.apiUrl}/api/User`)
+  getAllUsers():Observable<GetUser[]>{
+      return this.http.get<GetUser[]>(`${this.apiUrl}/api/User`)
   }  
 
   getUserById(id : number):Observable<GetUser>{
@@ -44,8 +44,8 @@ export class UserService {
     return this.http.get<GetUser>(`${this.apiUrl}/api/User/GetByUserName/${userName}`);
   }
 
-  getUserProfileByFullName(firstName: string, lastName: string):Observable<GetUser>{
-    return this.http.get<GetUser>(`${this.apiUrl}/api/User/GetByFullName/${firstName}/${lastName}`);
+  getUserProfilesByFullName(firstName: string, lastName: string):Observable<GetUser[]>{
+    return this.http.get<GetUser[]>(`${this.apiUrl}/api/User/GetByFullName/${firstName}/${lastName}`);
   }
 
   getUserProfileByPhone(phone: string):Observable<GetUser>{

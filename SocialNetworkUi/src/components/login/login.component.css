@@ -3,10 +3,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #3C6E71;
     color: white;
     width: 100%;
-    height: calc(100vh - 60px);
+    height: 90vh;
 }
 
 #login-form{
@@ -15,16 +14,17 @@
     justify-content: space-between;
     width: 50%;
     height: 50%;
+    color: white;
 }
 
 ::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick, .mat-error{
     color: #590d22;
 }
 
-mat-raised-button{
-    color: white;
+.mat-raised-button{
     background-color: #353535;
+    margin-bottom: 2vh;
 }
-#form-field{
-    color: #590d22;
+#register{
+    width: 50%;
 }

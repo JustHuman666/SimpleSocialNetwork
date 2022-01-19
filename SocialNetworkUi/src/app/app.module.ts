@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ChangeDetectorRef, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +21,8 @@ import {MatSelectModule} from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatMenuModule } from '@angular/material/menu';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatTabsModule} from '@angular/material/tabs'; 
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 import { SOCIAL_NETWORK_API_URL } from 'src/injection/injection-token';
 import { UNIQUE_USER_TOKEN_KEY } from 'src/services/auth-service/auth.service';
@@ -31,6 +33,9 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { LoginComponent } from 'src/components/login/login.component';
 import { HomeComponent } from 'src/components/home/home.component';
 import { ProfileComponent } from 'src/components/profile/profile.component';
+import { RegisterComponent } from 'src/components/register/register.component';
+import { ChangePasswordComponent } from 'src/components/change-password/change-password.component';
+import { FriendsComponent } from 'src/components/friends/friends.component';
 
 export function getToken() {
   return localStorage.getItem(UNIQUE_USER_TOKEN_KEY);
@@ -41,7 +46,10 @@ export function getToken() {
     AppComponent,
     LoginComponent,
     HomeComponent,
-    ProfileComponent
+    ProfileComponent,
+    RegisterComponent,
+    ChangePasswordComponent,
+    FriendsComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +70,8 @@ export function getToken() {
     MatIconModule,
     MatMenuModule,
     MatDividerModule,
+    MatTabsModule,
+    MatButtonToggleModule,
 
     JwtModule.forRoot({
       config: {

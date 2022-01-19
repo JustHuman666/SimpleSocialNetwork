@@ -1,0 +1,36 @@
+#friends-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    overflow: auto;
+    color: white;
+}
+.mat-tab-group{
+    margin-top: 2vh;
+    width: 80%;
+}
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar{
+    background-color: #D9D9D9;
+}
+.error-message{
+    text-align: center;
+    margin-top: 10vh;
+    font-size: 9vh;
+    line-height: 10vh;
+}
+::ng-deep .mat-button-toggle-standalone.mat-button-toggle-appearance-standard, .mat-button-toggle-group-appearance-standard{
+    width: 99%;
+    justify-content: space-between;
+    text-align: center;
+}
+
+::ng-deep .mat-button-toggle-appearance-standard{
+    width: 25%;
+    background-color: #d9d9d965;
+}
+::ng-deep .mat-button-toggle-button.mat-focus-indicator:focus{
+    background-color: #353535;
+}

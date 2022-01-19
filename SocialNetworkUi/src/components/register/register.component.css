@@ -1,4 +1,4 @@
-#profile-container{
+#register-container{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -8,17 +8,14 @@
     overflow: auto;
     color: white;
 }
-h2{
-    margin-top: 3vh;
-    margin-bottom: 1vh;
-    font-size: xx-large;
-}
-h2, h3{
+h3{
     color: white;
     margin-left: 1vw;
+    margin-bottom: 3vh;
+    margin-top: 1.5vh;
 }
 
-#update-form{
+#register-form{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -31,13 +28,9 @@ h2, h3{
 }
 
 .mat-raised-button{
-    color: white;
     background-color: #353535;
     margin-bottom: 2vh;
 }
 .mat-form-field-flex{
     height: 5vh;
-}
-#change-password{
-    width: 50%;
 }

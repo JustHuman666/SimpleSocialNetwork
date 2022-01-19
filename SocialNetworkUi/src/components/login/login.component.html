@@ -1,9 +1,6 @@
 <div  id="home-container">
   <h2>Login</h2>
   <form [formGroup]="loginForm" (ngSubmit)="login()" id="login-form">
-    <mat-error *ngIf="loginError!=''">
-      {{loginError}}
-    </mat-error>
     <mat-form-field appearance="outline" color="accent">
       <mat-label color="accent">Write your email</mat-label>
       <input matInput formControlName="email"
@@ -25,6 +22,10 @@
               Please, write a valid password
             </mat-error>
       </mat-form-field>
+      <mat-error *ngIf="loginError!=''">
+        {{loginError}}
+      </mat-error>
       <button mat-raised-button [disabled]="!loginForm.valid"> Login </button>
   </form>
+  <button mat-raised-button id="register" routerLink="/register"> Register </button>
 </div>

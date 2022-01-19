@@ -6,9 +6,11 @@
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item routerLink="/login" *ngIf="!isLoggedIn">Log in</button>
-      <button mat-menu-item routerLink="" *ngIf="!isLoggedIn">Register</button>
-      <button mat-menu-item routerLink="" *ngIf="isLoggedIn">My profile</button>
-      <button mat-menu-item routerLink="" *ngIf="isLoggedIn">Friends</button>
+      <button mat-menu-item routerLink="/register" *ngIf="!isLoggedIn">Register</button>
+      <button mat-menu-item routerLink="" *ngIf="!isLoggedIn">Home</button>
+      <button mat-menu-item routerLink="/profile" *ngIf="isLoggedIn">My profile</button>
+      <button mat-menu-item routerLink="/friends" *ngIf="isLoggedIn">Friends</button>
+      <button mat-menu-item routerLink="" *ngIf="isLoggedIn">Chats</button>
       <button mat-menu-item *ngIf="isLoggedIn" (click)="logOut()">Log out</button>
     </mat-menu>
   </div>

@@ -1,7 +1,6 @@
-<h2>{{userName}} profile</h2>
-<h3>Welcome, {{firstName}}! Here you can see your info and update it, if you want to.</h3>
-<div id="profile-container">
-    <form [formGroup]="updateForm" (ngSubmit)="update()" id="update-form">
+<h3>Welcome! Here you can enter your info and register in our network.</h3>
+<div id="register-container">
+    <form [formGroup]="registerForm" (ngSubmit)="register()" id="register-form">
         <mat-form-field appearance="outline" color="accent">
             <mat-label>User name:</mat-label>
             <input matInput id="userName" formControlName="userName"
@@ -31,7 +30,8 @@
         <mat-form-field appearance="outline" color="accent">
             <mat-label>Email:</mat-label>
             <input matInput id="email" formControlName="email"
-                    required>
+                    required
+                    type="email">
                     <mat-error>
                         Please, write a valid email address
                     </mat-error>
@@ -39,22 +39,28 @@
 
         <mat-form-field appearance="outline" color="accent">
             <mat-label>Phone number:</mat-label>
-            <input matInput id="phoneNumber" formControlName="phoneNumber"
-                    required>
+            <input matInput id="phoneNumber" formControlName="phoneNumber" 
+                    required
+                    type="tel">
                     <mat-error>
                         Please, write a valid phone number
+                    </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Password:</mat-label>
+            <input matInput id="password" formControlName="password" 
+                    required 
+                    type="password">
+                    <mat-error>
+                        Please, write a valid password
                     </mat-error>
         </mat-form-field>
         <mat-error *ngIf="error!=''">
             {{error}}
           </mat-error>
-        <button mat-raised-button [disabled]="!updateForm.valid"> 
-            Update
-            <mat-icon>sync</mat-icon>
+        <button mat-raised-button [disabled]="!registerForm.valid"> 
+            Register
+            <mat-icon *ngIf="registerForm.valid">done_outline</mat-icon>
         </button>
       </form>
-      <button mat-raised-button id="change-password" routerLink="/change-password"> 
-        Change password
-        <mat-icon>fingerprint</mat-icon>
-    </button>
 </div>
