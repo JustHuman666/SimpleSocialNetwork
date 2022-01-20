@@ -6,7 +6,7 @@
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-            <button mat-menu-item routerLink="">Delete message</button>
+            <button mat-menu-item (click)="deleteMessage()">Delete message</button>
             </mat-menu>
         </div>
         <p>{{Message.text}}</p>

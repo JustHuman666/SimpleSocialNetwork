@@ -6,6 +6,7 @@ import { AuthService } from "src/services/auth-service/auth.service";
 import { MessageService } from "src/services/message-service/message.service";
 
 import { DatePipe } from "@angular/common";
+import { Error } from "src/error-handle/error";
 
 import { GetUser } from "src/interfaces/get-user";
 import { GetMessage } from "src/interfaces/get-message";
@@ -44,5 +45,16 @@ export class MessageComponent implements OnInit {
         this.sendingTime = this.datepipe.transform(this.Message.sendingTime, 'M/d/yy, h:mm a')!;
     }
     
+    deleteMessage(){
+        this.messageService.deleteMessage(this.Message.id).subscribe(
+            (data) => {
+               alert("Message deleted");
+               window.location.reload();
+            },
+            (exception) => {
+                this.messageError = Error.returnErrorMessage(exception);
+            }
+        );
+    }
 }
   
