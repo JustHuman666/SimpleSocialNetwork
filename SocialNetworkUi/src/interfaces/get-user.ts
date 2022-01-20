@@ -6,5 +6,5 @@ export interface GetUser {
     firstName: string;
     lastName: string;
     
-    friendsIds : number[];
+    thisUserFriendIds : number[];
 }

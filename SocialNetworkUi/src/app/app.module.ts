@@ -23,6 +23,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatTabsModule} from '@angular/material/tabs'; 
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatTreeModule} from '@angular/material/tree'; 
 
 import { SOCIAL_NETWORK_API_URL } from 'src/injection/injection-token';
 import { UNIQUE_USER_TOKEN_KEY } from 'src/services/auth-service/auth.service';
@@ -36,6 +37,11 @@ import { ProfileComponent } from 'src/components/profile/profile.component';
 import { RegisterComponent } from 'src/components/register/register.component';
 import { ChangePasswordComponent } from 'src/components/change-password/change-password.component';
 import { FriendsComponent } from 'src/components/friends/friends.component';
+import { FriendProfileComponent } from 'src/components/friend-profile/friend.profile.component';
+import { SearchComponent } from 'src/components/search/search.component';
+import { ChatsComponent } from 'src/components/chats/chats.component';
+import { ChatMessagesComponent } from 'src/components/chat-messages/chat.messages.component';
+import { MessageComponent } from 'src/components/message/message.component';
 
 export function getToken() {
   return localStorage.getItem(UNIQUE_USER_TOKEN_KEY);
@@ -49,7 +55,12 @@ export function getToken() {
     ProfileComponent,
     RegisterComponent,
     ChangePasswordComponent,
-    FriendsComponent
+    FriendsComponent,
+    FriendProfileComponent,
+    SearchComponent,
+    ChatsComponent,
+    ChatMessagesComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +83,7 @@ export function getToken() {
     MatDividerModule,
     MatTabsModule,
     MatButtonToggleModule,
+    MatTreeModule,
 
     JwtModule.forRoot({
       config: {

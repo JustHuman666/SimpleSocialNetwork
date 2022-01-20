@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SOCIAL_NETWORK_API_URL } from 'src/injection/injection-token';
 
 import { GetUser } from 'src/interfaces/get-user';
+import { LoggedUserProfile } from 'src/interfaces/logged-user-profile';
 import { UpdateUser } from 'src/interfaces/update-user';
 import { ChangePassword } from 'src/interfaces/change-password';
 
@@ -28,8 +29,8 @@ export class UserService {
     return this.http.get<string[]>(`${this.apiUrl}/api/User/Roles`);
   }
 
-  getThisUserProfile():Observable<GetUser>{
-    return this.http.get<GetUser>(`${this.apiUrl}/api/User/MyProfile`);
+  getThisUserProfile():Observable<LoggedUserProfile>{
+    return this.http.get<LoggedUserProfile>(`${this.apiUrl}/api/User/MyProfile`);
   }
 
   changeUserPassword(changePassword: ChangePassword):Observable<any>{
@@ -49,7 +50,7 @@ export class UserService {
   }
 
   getUserProfileByPhone(phone: string):Observable<GetUser>{
-    return this.http.post<GetUser>(`${this.apiUrl}/api/User/GetByPhone`, phone);
+    return this.http.get<GetUser>(`${this.apiUrl}/api/User/GetByPhone/${phone}`);
   }
 
   addUserToRole(id: number, role: string):Observable<any>{

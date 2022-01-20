@@ -21,16 +21,6 @@
     font-size: 9vh;
     line-height: 10vh;
 }
-::ng-deep .mat-button-toggle-standalone.mat-button-toggle-appearance-standard, .mat-button-toggle-group-appearance-standard{
-    width: 99%;
-    justify-content: space-between;
-    text-align: center;
-}
-
-::ng-deep .mat-button-toggle-appearance-standard{
-    width: 25%;
-    background-color: #d9d9d965;
-}
-::ng-deep .mat-button-toggle-button.mat-focus-indicator:focus{
-    background-color: #353535;
+.users-profiles{
+    margin-top: 2vh;
 }

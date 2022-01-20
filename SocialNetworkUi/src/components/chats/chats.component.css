@@ -1,29 +1,43 @@
-#profile-container{
+.mat-card{
+    background-color: #D9D9D9;
+    margin-top: 1vh;
+    color: #353535;
+    width: 80%;
+}
+.chats-container{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: auto;
-    overflow: auto;
+    overflow: hidden;
     color: white;
 }
-h2{
-    margin-top: 3vh;
-    margin-bottom: 1vh;
-    font-size: xx-large;
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
-h2, h3{
-    color: white;
-    margin-left: 1vw;
+.header h1, .header p{
+    margin-bottom: 0;
 }
 
-#update-form{
+.error-message{
+    text-align: center;
+    margin-top: 10vh;
+    font-size: 9vh;
+    line-height: 10vh;
+}
+.chat-form{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-top: 2vh;
     width: 50%;
-    height: auto;
+    height: 50%;
+    color: white;
 }
 
 ::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick, .mat-error{
@@ -31,13 +45,6 @@ h2, h3{
 }
 
 .mat-raised-button{
-    color: white;
     background-color: #353535;
     margin-bottom: 2vh;
-}
-.mat-form-field-flex{
-    height: 5vh;
-}
-.addition-button{
-    width: 50%;
 }

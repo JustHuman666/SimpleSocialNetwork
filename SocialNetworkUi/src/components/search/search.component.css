@@ -1,0 +1,37 @@
+::ng-deep .mat-button-toggle-standalone.mat-button-toggle-appearance-standard, .mat-button-toggle-group-appearance-standard{
+    width: 99%;
+    justify-content: space-between;
+    text-align: center;
+    margin-top: 1vh;
+}
+
+::ng-deep .mat-button-toggle-appearance-standard{
+    width: 25%;
+    background-color: #d9d9d965;
+}
+::ng-deep .mat-button-toggle-button.mat-focus-indicator:focus{
+    background-color: #353535;
+}
+
+.users-profiles{
+    margin-top: 2vh;
+}
+
+.search-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 2vh;
+    width: 50%;
+    height: 50%;
+    color: white;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick, .mat-error{
+    color: #590d22;
+}
+
+.mat-raised-button{
+    background-color: #353535;
+    margin-bottom: 2vh;
+}

@@ -130,12 +130,13 @@ namespace NetworkBLL.Services
             {
                 throw new NetworkException("Such invitation for friendship already exist");
             }
-            var userDto = _mapper.Map<UserDto>(user);
-            var friendDto = _mapper.Map<UserDto>(friend);
-            friendDto.UserProfile.ThisUserFriendIds.Add(userId);
+            //var userDto = _mapper.Map<UserDto>(user);
+            //var friendDto = _mapper.Map<UserDto>(friend);
+            //friendDto.UserProfile.ThisUserFriendIds.Add(userId);
 
-            await _db.Users.UpdateAsync(_mapper.Map<User>(userDto));
-            await _db.Users.UpdateAsync(_mapper.Map<User>(friendDto));
+            //await _db.Users.UpdateAsync(_mapper.Map<User>(userDto));
+            friend.UserProfile.ThisUserFriends.Add(new UserFriends() { UserId = friend.Id, FriendId = user.Id});
+            await _db.Users.UpdateAsync(friend);
             await _db.SaveAsync();
         }
 

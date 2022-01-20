@@ -7,17 +7,28 @@ import { ProfileComponent } from 'src/components/profile/profile.component';
 
 import { IsLoggedIn } from 'src/guards/is-logged-in';
 import { IsNotLoggedIn } from 'src/guards/is-not-logged-in';
+
 import { RegisterComponent } from 'src/components/register/register.component';
 import { ChangePasswordComponent } from 'src/components/change-password/change-password.component';
 import { FriendsComponent } from 'src/components/friends/friends.component';
+import { FriendProfileComponent } from 'src/components/friend-profile/friend.profile.component';
+import { SearchComponent } from 'src/components/search/search.component';
+import { ChatsComponent } from 'src/components/chats/chats.component';
+import { ChatMessagesComponent } from 'src/components/chat-messages/chat.messages.component';
+import { MessageComponent } from 'src/components/message/message.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
-  {path: "login", component: LoginComponent, canActivate: [IsLoggedIn]},
-  {path: "profile", component: ProfileComponent, canActivate: [IsNotLoggedIn]},
-  {path: "register", component: RegisterComponent, canActivate: [IsLoggedIn]},
-  {path: "change-password", component: ChangePasswordComponent, canActivate: [IsNotLoggedIn]},
-  {path: "friends", component: FriendsComponent, canActivate: [IsNotLoggedIn]}
+  {path: "login", component: LoginComponent, canActivate: [IsNotLoggedIn]},
+  {path: "profile", component: ProfileComponent, canActivate: [IsLoggedIn]},
+  {path: "register", component: RegisterComponent, canActivate: [IsNotLoggedIn]},
+  {path: "change-password", component: ChangePasswordComponent, canActivate: [IsLoggedIn]},
+  {path: "friends", component: FriendsComponent, canActivate: [IsLoggedIn]},
+  {path: "friend-profile", component: FriendProfileComponent, canActivate: [IsLoggedIn]},
+  {path: "search", component: SearchComponent, canActivate: [IsLoggedIn]},
+  {path: "chats", component: ChatsComponent, canActivate: [IsLoggedIn]},
+  {path: "chat-messages/:id", component: ChatMessagesComponent, canActivate: [IsLoggedIn]},
+  {path: "message", component: MessageComponent, canActivate: [IsLoggedIn]}
 ];
 
 @NgModule({

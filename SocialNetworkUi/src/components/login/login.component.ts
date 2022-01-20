@@ -6,7 +6,7 @@ import { AuthService } from 'src/services/auth-service/auth.service';
 import { Error } from 'src/error-handle/error';
 
 @Component({
-  selector: 'app-login',
+  selector: 'login',
   templateUrl: './login.component.html', 
   styleUrls: ['./login.component.css']
 })

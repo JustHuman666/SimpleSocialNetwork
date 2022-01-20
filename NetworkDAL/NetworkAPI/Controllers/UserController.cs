@@ -161,10 +161,10 @@ namespace NetworkAPI.Controllers
         /// </summary>
         /// <param name="phoneNumber">The phone number of user who should be found</param>
         /// <returns>Found user</returns>
-        [HttpPost]
-        [Route("GetByPhone")]
+        [HttpGet]
+        [Route("GetByPhone/{phoneNumber}")]
         [Authorize(Roles = "Registered")]
-        public async Task<ActionResult<UserProfileModel>> GetUserProfileWithDetailsByPhone([FromBody]string phoneNumber)
+        public async Task<ActionResult<UserProfileModel>> GetUserProfileWithDetailsByPhone(string phoneNumber)
         {
             var user = await _userService.GetUserByPhoneNumberAsync(phoneNumber);
             var fullUser = await _userProfileService.GetProfileByIdWithDetailsAsync(user.Id);

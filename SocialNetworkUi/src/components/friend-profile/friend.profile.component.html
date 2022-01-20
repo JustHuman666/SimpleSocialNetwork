@@ -1,0 +1,25 @@
+<mat-card>
+    <mat-card-content>
+        <div class="header">
+            <h1>{{User.userName}}</h1>
+            <button mat-icon-button [matMenuTriggerFor]="menu" id="menu-button">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+            <button mat-menu-item *ngIf="canInvite" (click)="inviteForFriendship()" >Invite for friendship</button>
+            <button mat-menu-item *ngIf="isLoggedUserInvited" (click)="confirmFriendship()">Confirm</button>
+            <button mat-menu-item *ngIf="areFriends" (click)="deleteFriend()">Delete from friends</button>
+            <button mat-menu-item *ngIf="isAdmin" (click)="deleteUser()">Delete user</button>
+            </mat-menu>
+        </div>
+        <p>{{User.firstName}} {{User.lastName}}</p>
+        <p>Phone number: {{User.phoneNumber}}</p>
+        <button mat-raised-button class="friends-button" (click)="changeFriendsStatus()" [disabled]="friendsCount == 0">Friends
+            <mat-icon *ngIf="!showFriends">expand_more</mat-icon>
+            <mat-icon *ngIf="showFriends">expand_less</mat-icon>
+        </button>
+        <div class="friends-usernames" *ngIf="showFriends">
+            <mat-card class="friend-card"  *ngFor="let userName of userFriends" >User name: {{userName}}</mat-card>
+        </div>
+    </mat-card-content>
+</mat-card>

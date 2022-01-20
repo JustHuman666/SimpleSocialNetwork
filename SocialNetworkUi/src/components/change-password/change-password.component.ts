@@ -8,7 +8,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { ChangePassword } from 'src/interfaces/change-password';
 
 @Component({
-  selector: 'app-change-password',
+  selector: 'change-password',
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.css']
 })

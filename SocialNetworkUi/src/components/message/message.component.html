@@ -1,0 +1,15 @@
+<mat-card>
+    <mat-card-content>
+        <div class="header">
+            <h1>From {{userSender.userName}} : </h1>
+            <button mat-icon-button [matMenuTriggerFor]="menu" id="menu-button">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="">Delete message</button>
+            </mat-menu>
+        </div>
+        <p>{{Message.text}}</p>
+        <p id="date">{{sendingTime}}</p>
+    </mat-card-content>
+</mat-card>

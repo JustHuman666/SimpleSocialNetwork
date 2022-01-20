@@ -7,7 +7,7 @@ import { AuthService } from "src/services/auth-service/auth.service";
 import { Error } from "src/error-handle/error";
 
 @Component({
-    selector: 'app-profile',
+    selector: 'profile',
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.css']
 })
@@ -73,7 +73,7 @@ export class ProfileComponent implements OnInit {
         );
     }
 
-    delete(){
+    deleteAccount(){
         if(confirm("Confirm, if you want to delete your account")) {
             this.userService.deleteThisUser().subscribe(() => {
               this.authService.logOut();
@@ -86,8 +86,5 @@ export class ProfileComponent implements OnInit {
         this.router.navigate([""]);
     }
    
-
-   
-
 }
   

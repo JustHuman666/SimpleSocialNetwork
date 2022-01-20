@@ -27,7 +27,7 @@ export class FriendsService{
         return this.http.get<GetUser[]>(`${this.apiUrl}/api/Friend/GetOwnInvitations`)
     } 
 
-    getSentInnvitations():Observable<GetUser[]>{
+    getSentInvitations():Observable<GetUser[]>{
         return this.http.get<GetUser[]>(`${this.apiUrl}/api/Friend/GetSentInvitations`)
     } 
 

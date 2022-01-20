@@ -117,6 +117,10 @@ namespace NetworkBLL.Services
             {
                 throw new NetworkException("Users parameters and password cannot contain empty spaces");
             }
+            if (newUser.PhoneNumber.Contains("+"))
+            {
+                throw new NetworkException("User phone number cannot have non-numeric chatacters");
+            }
             var isRoleExist = await _db.Roles.CheckRoleExistingAsync(role);
             if(!isRoleExist)
             {
@@ -300,6 +304,10 @@ namespace NetworkBLL.Services
                 || user.PhoneNumber.Contains(" "))
             {
                 throw new NetworkException("Users parameters and password cannot contain empty spaces");
+            }
+            if (user.PhoneNumber.Contains("+"))
+            {
+                throw new NetworkException("User phone number cannot have non-numeric chatacters");
             }
             var existWithEmailUser = await _db.Users.GetByEmailAsync(user.Email);
             if (existWithEmailUser != null && user.Id != existWithEmailUser.Id)

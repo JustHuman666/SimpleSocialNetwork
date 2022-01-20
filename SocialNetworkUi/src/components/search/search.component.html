@@ -1,0 +1,94 @@
+<mat-button-toggle-group #group="matButtonToggleGroup">
+    <mat-button-toggle value="phone" (change)="updateForm()">
+        By phone number
+    </mat-button-toggle>
+    <mat-button-toggle value="userName" (change)="updateForm()">
+        By user name
+    </mat-button-toggle>
+    <mat-button-toggle value="fullName" (change)="updateForm()">
+        By full name
+    </mat-button-toggle>
+    <mat-button-toggle value="all" (change)="updateForm()">
+        All users
+    </mat-button-toggle>
+</mat-button-toggle-group>
+
+<div *ngIf="group.value == 'phone'" >
+    <form [formGroup]="phoneForm" (ngSubmit)="findByPhone()" class="search-form">
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label color="accent">Write user phone number</mat-label>
+          <input matInput formControlName="phoneNumber"
+                type="tel"
+                pattern="[0-9]+"
+                required
+                placeholder="Phone number">
+                <mat-error>
+                  Please, write a valid phone number with numbers only
+                </mat-error>
+        </mat-form-field>
+        <mat-error *ngIf="phoneError!=''">
+            {{phoneError}}
+        </mat-error>
+        <button mat-raised-button [disabled]="!phoneForm.valid"> Search </button>
+    </form>
+    <div class="users-profiles" *ngIf="canShow">
+        <friend-profile [User] = "foundUser"></friend-profile>
+    </div>
+      
+</div>
+<div *ngIf="group.value == 'userName'" >
+    <form [formGroup]="userNameForm" (ngSubmit)="findByUserName()" class="search-form">
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label color="accent">Write user name</mat-label>
+          <input matInput formControlName="userName"
+                type="text"
+                required
+                placeholder="User name">
+                <mat-error>
+                  Please, write a valid user name
+                </mat-error>
+        </mat-form-field>
+        <mat-error *ngIf="userNameError!=''">
+            {{userNameError}}
+        </mat-error>
+        <button mat-raised-button [disabled]="!userNameForm.valid"> Search </button>
+    </form>
+    <div class="users-profiles" *ngIf="canShow">
+        <friend-profile [User] = "foundUser"></friend-profile>
+    </div>
+    
+</div>
+<div *ngIf="group.value == 'fullName'" class="users-profiles">
+    <form [formGroup]="fullNameForm" (ngSubmit)="findByFullName()" class="search-form">
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label color="accent">Write user first name</mat-label>
+          <input matInput formControlName="firstName"
+                type="text"
+                required
+                placeholder="User first name">
+                <mat-error>
+                  Please, write a valid first name
+                </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label color="accent">Write user last name</mat-label>
+            <input matInput formControlName="lastName"
+                  type="text"
+                  required
+                  placeholder="User last name">
+                  <mat-error>
+                    Please, write a valid last name
+                  </mat-error>
+          </mat-form-field>
+        <mat-error *ngIf="fullNameError!=''">
+            {{fullNameError}}
+        </mat-error>
+        <button mat-raised-button [disabled]="!fullNameForm.valid"> Search </button>
+    </form>
+    <div class="users-profiles" *ngIf="canShow">
+        <friend-profile *ngFor="let user of foundUsersByName" [User] = "user"></friend-profile>
+    </div>
+</div>
+<div *ngIf="group.value == 'all'" class="users-profiles">
+    <friend-profile *ngFor="let user of allUsers" [User] = "user"></friend-profile>
+</div>

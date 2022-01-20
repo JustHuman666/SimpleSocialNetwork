@@ -1,0 +1,44 @@
+<div class="chat-container">
+    <div class="header">
+        <h1>{{thisChat.chatName}}</h1>
+        <button mat-icon-button [matMenuTriggerFor]="menu" id="menu-button">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+        <button mat-menu-item>Users</button>
+        <button mat-menu-item>Add new user</button>
+        </mat-menu>
+    </div>
+    <div class="main-chat-body">
+        <div class="messages-container">
+           <h1>Messages</h1>
+           <message *ngFor="let message of thisChatMessages" [Message] = "message"></message>
+
+        </div>
+        <div class="users-container" >
+            <h1>Users</h1>
+            <form id="user-name-form">
+                <input type="text" matInput placeholder="Write user name" [formControl]="userName" id="userName">
+                <button mat-raised-button (click)="addNewUser()" id="send-button"> 
+                    Add
+                </button>
+                <mat-error *ngIf="messageError != ''">
+                    {{messageError}}
+                </mat-error>
+            </form>
+            <mat-card class="friend-card"  *ngFor="let user of thisChatUsers" >User name: {{user.userName}}</mat-card>
+        </div>
+    </div>
+    <div class="footer">
+        <form id="message-form">
+            <input type="text" matInput placeholder="Write your message" [formControl]="text">
+            <button mat-raised-button (click)="sendMessage()" id="send-button"> 
+                Send
+            </button>
+            <mat-error *ngIf="messageError != ''">
+                {{messageError}}
+            </mat-error>
+        </form>
+
+    </div>
+</div>

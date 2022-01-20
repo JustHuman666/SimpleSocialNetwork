@@ -7,7 +7,7 @@ import { AuthService } from "src/services/auth-service/auth.service";
 import { Error } from "src/error-handle/error";
 
 @Component({
-    selector: 'app-register',
+    selector: 'register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.css']
 })

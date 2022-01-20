@@ -10,7 +10,7 @@ import { GetUser } from "src/interfaces/get-user";
 import { Error } from "src/error-handle/error";
 
 @Component({
-    selector: 'app-friends',
+    selector: 'friends',
     templateUrl: './friends.component.html',
     styleUrls: ['./friends.component.css']
 })
@@ -36,7 +36,13 @@ export class FriendsComponent implements OnInit {
     ngOnInit(): void {
         
         this.friendsError = '';
-        
+        this.invitationsError = '';
+        this.invitedError = '';
+
+        this.getLoggedUserFriends();
+    }
+
+    getLoggedUserFriends(){
         this.friendsService.getOwnFriends().subscribe(
             (data) => {
                 this.friends = data;
@@ -44,7 +50,9 @@ export class FriendsComponent implements OnInit {
             (exception) =>{
                 this.friendsError = Error.returnErrorMessage(exception);
             });
+    }
 
+    getLoggedUSerInvitations(){
         this.friendsService.getReceivedInnvitations().subscribe(
             (data) => {
                 this.receivedInvitations = data;
@@ -52,14 +60,22 @@ export class FriendsComponent implements OnInit {
             (exception) =>{
                 this.invitationsError = Error.returnErrorMessage(exception);
             });
+    }
 
-        this.friendsService.getSentInnvitations().subscribe(
+    getInvitationsByLoggedUser(){
+        this.friendsService.getSentInvitations().subscribe(
             (data) => {
                 this.sentInvitations = data;
             },
             (exception) =>{
                 this.invitedError = Error.returnErrorMessage(exception);
             });
+    }
+
+    updateAll(){
+        this.getLoggedUserFriends();
+        this.getLoggedUSerInvitations();
+        this.getInvitationsByLoggedUser();
     }
 }
   
